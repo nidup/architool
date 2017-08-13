@@ -8,6 +8,7 @@ use Nidup\Architool\Application\MoveLegacyNamespace;
 use Nidup\Architool\Application\MoveLegacyNamespaceHandler;
 use Nidup\Architool\Infrastructure\Filesystem\FsBoundedContextRepository;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceExtractor;
+use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceRenamer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -47,7 +48,8 @@ class HexagonalizeCommand extends Command
         ];
 
         $mover = new FsNamespaceExtractor($path);
-        $handler = new MoveLegacyNamespaceHandler($mover);
+        $renamer = new FsNamespaceRenamer($path);
+        $handler = new MoveLegacyNamespaceHandler($mover, $renamer);
         /** @var MoveLegacyNamespace $command */
         foreach ($commands as $command) {
             $handler->handle($command);
