@@ -4,7 +4,10 @@ namespace Nidup\Architool\Infrastructure\Cli;
 
 use Nidup\Architool\Application\CreateBoundedContexts;
 use Nidup\Architool\Application\CreateBoundedContextsHandler;
-use Nidup\Architool\Infrastructure\Filesystem\BoundedContextRepository;
+use Nidup\Architool\Application\MoveLegacyNamespace;
+use Nidup\Architool\Application\MoveLegacyNamespaceHandler;
+use Nidup\Architool\Infrastructure\Filesystem\FsBoundedContextRepository;
+use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceExtractor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,13 +32,41 @@ class HexagonalizeCommand extends Command
         $srcPath = $path.DIRECTORY_SEPARATOR.'src';
         $pimNamespacePath = $srcPath.DIRECTORY_SEPARATOR.'Pim';
         $this->createBoundedContexts($pimNamespacePath, $output);
+
+        $this->moveLegacyPimNamespaces($srcPath, $output);
+    }
+
+    private function moveLegacyPimNamespaces(string $path, OutputInterface $output)
+    {
+        $commands = [
+            new MoveLegacyNamespace(
+                'Pim/Bundle/CatalogBundle/Elasticsearch',
+                'Pim/ProductEnrichment/Infrastructure/Elasticsearch',
+                'Extract ElasticSearch infrastructure'
+            ),
+        ];
+
+        $mover = new FsNamespaceExtractor($path);
+        $handler = new MoveLegacyNamespaceHandler($mover);
+        /** @var MoveLegacyNamespace $command */
+        foreach ($commands as $command) {
+            $handler->handle($command);
+            $output->writeln(
+                sprintf(
+                    '<info>Legacy namespace "%s" has been extracted to "%s" in order to "%s"</info>',
+                    $command->getLegacyNamespace(),
+                    $command->getDestinationNamespace(),
+                    $command->getDescription()
+                )
+            );
+        }
     }
 
     private function createBoundedContexts(string $path, OutputInterface $output)
     {
-        $contextNames = ['UserManagement', 'ProductStructure', 'ProductEnrichment'];
+        $contextNames = ['UserManagement', 'CatalogSetup', 'ProductStructure', 'ProductEnrichment'];
         $command = new CreateBoundedContexts($contextNames);
-        $repository = new BoundedContextRepository($path);
+        $repository = new FsBoundedContextRepository($path);
         $handler = new CreateBoundedContextsHandler($repository);
         $handler->handle($command);
         $output->writeln(sprintf("<info>Following bounded contexts have been created %s</info>", implode(', ', $contextNames)));
