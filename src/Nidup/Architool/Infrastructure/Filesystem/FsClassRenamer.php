@@ -2,13 +2,12 @@
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Application\NamespaceExtractor;
-use Nidup\Architool\Application\NamespaceRenamer;
+use Nidup\Architool\Application\ClassRenamer;
+use Nidup\Architool\Domain\ClassName;
 use Nidup\Architool\Domain\CodeNamespace;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
-final class FsNamespaceRenamer implements NamespaceRenamer
+final class FsClassRenamer implements ClassRenamer
 {
     private $projectPath;
     private $fileUpdater;
@@ -19,25 +18,23 @@ final class FsNamespaceRenamer implements NamespaceRenamer
         $this->fileUpdater = new FsFileUpdater();
     }
 
-    public function rename(CodeNamespace $source, CodeNamespace $destination)
+    public function rename(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
     {
-        $this->changeDeclaration($source, $destination);
-        $this->changeClassesReferences($source, $destination);
-        $this->changeServicesReferences($source, $destination);
-        $this->changeAppKernelBundles($source, $destination);
-        $this->changeAppConfiguration($source, $destination);
+        $this->changeDeclaration($source, $destination, $className);
+        $this->changeClassesReferences($source, $destination, $className);
+        $this->changeServicesReferences($source, $destination, $className);
+        $this->changeAppKernelBundles($source, $destination, $className);
+        $this->changeAppConfiguration($source, $destination, $className);
     }
 
-    private function changeDeclaration(CodeNamespace $source, CodeNamespace $destination)
+    private function changeDeclaration(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
     {
         $srcPath = $this->projectPath.DIRECTORY_SEPARATOR.'src';
         $destinationPath = $srcPath.DIRECTORY_SEPARATOR.$destination->getName();
         $finder = new Finder();
         $finder->files()
             ->in($destinationPath)
-            ->name('*.php')
-            ->notName('*Spec.php')
-            ->notName('*Integration.php');
+            ->name($className->getName().'.php');
 
         $sourceNamespacePattern = '/namespace '.str_replace('/', "\\\\", $source->getName()).'/';
         $destinationNamespaceDeclaration = 'namespace '.str_replace('/', "\\", $destination->getName());
@@ -47,7 +44,7 @@ final class FsNamespaceRenamer implements NamespaceRenamer
         }
     }
 
-    private function changeClassesReferences(CodeNamespace $source, CodeNamespace $destination)
+    private function changeClassesReferences(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
     {
         $finder = new Finder();
 
@@ -59,15 +56,15 @@ final class FsNamespaceRenamer implements NamespaceRenamer
             ->in([$srcPath, $behatPath, $testsPath])
             ->name('*.php');
 
-        $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $source->getName()).'/';
-        $destinationNamespace = ''.str_replace('/', "\\", $destination->getName());
+        $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $source->getName()."\\\\".$className->getName()).'/';
+        $destinationNamespace = ''.str_replace('/', "\\", $destination->getName()."\\".$className->getName());
 
         foreach ($finder as $file) {
             $this->fileUpdater->updateIfPossible($file, $sourceNamespacePattern, $destinationNamespace);
         }
     }
 
-    private function changeServicesReferences(CodeNamespace $source, CodeNamespace $destination)
+    private function changeServicesReferences(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
     {
         $finder = new Finder();
 
@@ -77,15 +74,15 @@ final class FsNamespaceRenamer implements NamespaceRenamer
             ->in([$srcPath])
             ->name('*.yml');
 
-        $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $source->getName()).'/';
-        $destinationNamespace = ''.str_replace('/', "\\", $destination->getName());
+        $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $source->getName()."\\\\".$className->getName()).'/';
+        $destinationNamespace = ''.str_replace('/', "\\", $destination->getName()."\\".$className->getName());
 
         foreach ($finder as $file) {
             $this->fileUpdater->updateIfPossible($file, $sourceNamespacePattern, $destinationNamespace);
         }
     }
 
-    private function changeAppKernelBundles(CodeNamespace $source, CodeNamespace $destination)
+    private function changeAppKernelBundles(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
     {
         $finder = new Finder();
 
@@ -95,16 +92,15 @@ final class FsNamespaceRenamer implements NamespaceRenamer
             ->in($appPath)
             ->name('AppKernel.php');
 
-        $sourceNamespacePattern = '/new '.str_replace('/', "\\\\", $source->getName()).'/';
-        $destinationNamespaceNew = 'new '.str_replace('/', "\\", $destination->getName());
-
+        $sourceNamespacePattern = '/new '.str_replace('/', "\\\\", $source->getName()."\\\\".$className->getName()).'/';
+        $destinationNamespace = 'new '.str_replace('/', "\\", $destination->getName()."\\".$className->getName());
 
         foreach ($finder as $file) {
-            $this->fileUpdater->updateIfPossible($file, $sourceNamespacePattern, $destinationNamespaceNew);
+            $this->fileUpdater->updateIfPossible($file, $sourceNamespacePattern, $destinationNamespace);
         }
     }
 
-    private function changeAppConfiguration(CodeNamespace $source, CodeNamespace $destination)
+    private function changeAppConfiguration(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
     {
         $finder = new Finder();
 
@@ -114,8 +110,8 @@ final class FsNamespaceRenamer implements NamespaceRenamer
             ->in($appPath)
             ->name('*.yml');
 
-        $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $source->getName()).'/';
-        $destinationNamespace = ''.str_replace('/', "\\", $destination->getName());
+        $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $source->getName()."\\\\".$className->getName()).'/';
+        $destinationNamespace = ''.str_replace('/', "\\", $destination->getName()."\\".$className->getName());
 
         foreach ($finder as $file) {
             $this->fileUpdater->updateIfPossible($file, $sourceNamespacePattern, $destinationNamespace);

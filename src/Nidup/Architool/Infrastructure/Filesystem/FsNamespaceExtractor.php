@@ -6,7 +6,7 @@ use Nidup\Architool\Application\NamespaceExtractor;
 use Nidup\Architool\Domain\CodeNamespace;
 use Symfony\Component\Filesystem\Filesystem;
 
-class FsNamespaceExtractor implements NamespaceExtractor
+final class FsNamespaceExtractor implements NamespaceExtractor
 {
     private $projectPath;
     private $filesystem;
@@ -24,6 +24,6 @@ class FsNamespaceExtractor implements NamespaceExtractor
         $from = $srcPath.DIRECTORY_SEPARATOR.$source->getName();
         $to = $srcPath.DIRECTORY_SEPARATOR.$destination->getName();
 
-        $this->filesystem->rename($from, $to);
+        $this->filesystem->rename($from, $to, true);
     }
 }

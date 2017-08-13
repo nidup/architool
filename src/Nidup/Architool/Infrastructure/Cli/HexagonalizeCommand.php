@@ -6,9 +6,13 @@ use Nidup\Architool\Application\CreateBoundedContexts;
 use Nidup\Architool\Application\CreateBoundedContextsHandler;
 use Nidup\Architool\Application\InitializeWorkspace;
 use Nidup\Architool\Application\InitializeWorkspaceHandler;
+use Nidup\Architool\Application\MoveLegacyClass;
+use Nidup\Architool\Application\MoveLegacyClassHandler;
 use Nidup\Architool\Application\MoveLegacyNamespace;
 use Nidup\Architool\Application\MoveLegacyNamespaceHandler;
 use Nidup\Architool\Infrastructure\Filesystem\FsBoundedContextRepository;
+use Nidup\Architool\Infrastructure\Filesystem\FsClassExtractor;
+use Nidup\Architool\Infrastructure\Filesystem\FsClassRenamer;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceExtractor;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceRenamer;
 use Nidup\Architool\Infrastructure\Filesystem\FsWorkspaceCleaner;
@@ -45,6 +49,41 @@ class HexagonalizeCommand extends Command
     private function moveLegacyPimNamespaces(string $path, OutputInterface $output)
     {
         $commands = [
+
+            new MoveLegacyNamespace(
+                'Pim/Component/Catalog',
+                'Pim/ProductEnrichment/Core/Domain',
+                'Extract product enrichment core business'
+            ),
+
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain',
+                'Pim/ProductStructure/Domain',
+                'AttributeTypes',
+                'Extract attribute types'
+            ),
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain',
+                'Pim/ProductStructure/Domain',
+                'AttributeTypeInterface',
+                'Extract attribute types'
+            ),
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain',
+                'Pim/ProductStructure/Domain',
+                'AttributeTypeRegistry',
+                'Extract attribute types'
+            ),
+
+            new MoveLegacyNamespace(
+                'Pim/Bundle/CatalogBundle/AttributeType',
+                'Pim/ProductStructure/Domain/AttributeType',
+                'Extract product attribute types'
+            ),
+
+
+
+
             new MoveLegacyNamespace(
                 'Pim/Bundle/CatalogBundle/Elasticsearch',
                 'Pim/ProductEnrichment/Core/Infrastructure/Elasticsearch',
@@ -80,18 +119,38 @@ class HexagonalizeCommand extends Command
 
         $mover = new FsNamespaceExtractor($path);
         $renamer = new FsNamespaceRenamer($path);
-        $handler = new MoveLegacyNamespaceHandler($mover, $renamer);
+        $namespaceHandler = new MoveLegacyNamespaceHandler($mover, $renamer);
+
+
+        $mover = new FsClassExtractor($path);
+        $renamer = new FsClassRenamer($path);
+        $classHandler = new MoveLegacyClassHandler($mover, $renamer);
+
         /** @var MoveLegacyNamespace $command */
         foreach ($commands as $command) {
-            $handler->handle($command);
-            $output->writeln(
-                sprintf(
-                    '<info>Legacy namespace "%s" has been extracted to "%s" in order to "%s"</info>',
-                    $command->getLegacyNamespace(),
-                    $command->getDestinationNamespace(),
-                    $command->getDescription()
-                )
-            );
+            if ($command instanceof MoveLegacyNamespace) {
+                $namespaceHandler->handle($command);
+                $output->writeln(
+                    sprintf(
+                        '<info>Legacy namespace "%s" has been extracted to "%s" in order to "%s"</info>',
+                        $command->getLegacyNamespace(),
+                        $command->getDestinationNamespace(),
+                        $command->getDescription()
+                    )
+                );
+
+            } else if ($command instanceof MoveLegacyClass) {
+                $classHandler->handle($command);
+                $output->writeln(
+                    sprintf(
+                        '<info>Legacy class "%s" has been extracted to "%s" in order to "%s"</info>',
+                        $command->getClassName(),
+                        $command->getDestinationNamespace(),
+                        $command->getDescription()
+                    )
+                );
+            }
+
         }
     }
 

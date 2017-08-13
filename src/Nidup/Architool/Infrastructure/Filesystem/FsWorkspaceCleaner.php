@@ -7,7 +7,7 @@ use Nidup\Architool\Infrastructure\Git\GitStasher;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
-class FsWorkspaceCleaner implements WorkspaceCleaner
+final class FsWorkspaceCleaner implements WorkspaceCleaner
 {
     private $workspacePath;
     private $filesystem;
