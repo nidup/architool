@@ -8,19 +8,21 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class FsNamespaceExtractor implements NamespaceExtractor
 {
-    private $srcPath;
+    private $projectPath;
     private $filesystem;
 
-    public function __construct(string $srcPath)
+    public function __construct(string $projectPath)
     {
-        $this->srcPath = $srcPath;
+        $this->projectPath = $projectPath;
         $this->filesystem = new Filesystem();
     }
 
     public function extract(CodeNamespace $source, CodeNamespace $destination)
     {
-        $from = $this->srcPath.DIRECTORY_SEPARATOR.$source->getName();
-        $to = $this->srcPath.DIRECTORY_SEPARATOR.$destination->getName();
+        $srcPath = $this->projectPath.DIRECTORY_SEPARATOR.'src';
+
+        $from = $srcPath.DIRECTORY_SEPARATOR.$source->getName();
+        $to = $srcPath.DIRECTORY_SEPARATOR.$destination->getName();
 
         $this->filesystem->rename($from, $to);
     }

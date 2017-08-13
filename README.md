@@ -11,8 +11,8 @@ Experiments with Akeneo PIM code base, hexagonal architecture & DDD :rocket:
 
 ## How To Install
 
-Run `composr.phar update --prefer-dist` to install the tool's dependencies.
+Run `composer.phar update --prefer-dist` to install the tool's dependencies.
 
 ## How To Use
 
-Run `bin/console nidup:architool:hexagonalize /home/nico/fit/pim-ce-18
+Run `bin/console nidup:architool:hexagonalize /home/nico/fit/pim-ce-18`

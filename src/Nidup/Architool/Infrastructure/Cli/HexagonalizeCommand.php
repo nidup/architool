@@ -39,7 +39,7 @@ class HexagonalizeCommand extends Command
         $pimNamespacePath = $srcPath.DIRECTORY_SEPARATOR.'Pim';
         $this->createBoundedContexts($pimNamespacePath, $output);
 
-        $this->moveLegacyPimNamespaces($srcPath, $output);
+        $this->moveLegacyPimNamespaces($path, $output);
     }
 
     private function moveLegacyPimNamespaces(string $path, OutputInterface $output)
