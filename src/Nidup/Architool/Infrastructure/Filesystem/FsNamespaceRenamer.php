@@ -19,6 +19,12 @@ class FsNamespaceRenamer implements NamespaceRenamer
 
     public function rename(CodeNamespace $source, CodeNamespace $destination)
     {
+        $this->changeDeclaration($source, $destination);
+        $this->changeReferences($source, $destination);
+    }
+
+    private function changeDeclaration(CodeNamespace $source, CodeNamespace $destination)
+    {
         $destinationPath = $this->srcPath.DIRECTORY_SEPARATOR.$destination->getName();
         $finder = new Finder();
         $finder->files()
@@ -48,6 +54,31 @@ class FsNamespaceRenamer implements NamespaceRenamer
                     )
                 );
             }
+
+            file_put_contents($file->getRealPath(), $newContent);
+        }
+    }
+
+    private function changeReferences(CodeNamespace $source, CodeNamespace $destination)
+    {
+        $finder = new Finder();
+        $finder->files()
+            ->in($this->srcPath)
+            ->name('*.php');
+
+        $sourceNamespacePattern = '/use '.str_replace('/', "\\\\", $source->getName()).'/';
+        $destinationNamespaceUse = 'use '.str_replace('/', "\\", $destination->getName());
+
+        foreach ($finder as $file) {
+            $content = file_get_contents($file->getRealPath());
+            $nbReplacements = 0;
+            $newContent = preg_replace(
+                $sourceNamespacePattern,
+                $destinationNamespaceUse,
+                $content,
+                -1,
+                $nbReplacements
+            );
 
             file_put_contents($file->getRealPath(), $newContent);
         }
