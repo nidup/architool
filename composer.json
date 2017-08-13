@@ -1,7 +1,8 @@
 {
     "require": {
         "symfony/console": "3.3.*",
-        "symfony/yaml": "3.3.*"
+        "symfony/yaml": "3.3.*",
+        "symfony/filesystem": "3.3.*"
     },
     "require-dev": {
         "php": "^7.1"
