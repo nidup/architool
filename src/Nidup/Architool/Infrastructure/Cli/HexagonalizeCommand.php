@@ -75,12 +75,108 @@ class HexagonalizeCommand extends Command
                 'Extract attribute types'
             ),
 
+        /*
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain/Model',
+                'Pim/ProductStructure/Domain/Model',
+                'AttributeGroupInterface',
+                'Extract attribute in product structure'
+            ),
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain/Model',
+                'Pim/ProductStructure/Domain/Model',
+                'AttributeGroupTranslationInterface',
+                'Extract attribute in product structure'
+            ),
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain/Model',
+                'Pim/ProductStructure/Domain/Model',
+                'AttributeInterface',
+                'Extract attribute in product structure'
+            ),
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain/Model',
+                'Pim/ProductStructure/Domain/Model',
+                'AbstractAttribute',
+                'Extract attribute in product structure'
+            ),
+
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain/Model',
+                'Pim/ProductStructure/Domain/Model',
+                'AttributeOptionInterface',
+                'Extract attribute option in product structure'
+            ),
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain/Model',
+                'Pim/ProductStructure/Domain/Model',
+                'AttributeOptionValueInterface',
+                'Extract attribute option in product structure'
+            ),
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain/Model',
+                'Pim/ProductStructure/Domain/Model',
+                'AttributeRequirementInterface',
+                'Extract attribute in product structure'
+            ),
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain/Model',
+                'Pim/ProductStructure/Domain/Model',
+                'AttributeTranslationInterface',
+                'Extract attribute in product structure'
+            ),
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain/Model',
+                'Pim/ProductStructure/Domain/Model',
+                'FamilyInterface',
+                'Extract family in product structure'
+            ),
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain/Model',
+                'Pim/ProductStructure/Domain/Model',
+                'FamilyTranslationInterface',
+                'Extract family in product structure'
+            ),
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain/Model',
+                'Pim/ProductStructure/Domain/Model',
+                'CompletenessInterface',
+                'Extract completeness in product structure'
+            ),
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain/Model',
+                'Pim/ProductStructure/Domain/Model',
+                'Completeness',
+                'Extract completeness in product structure'
+            ),
+
+
             new MoveLegacyNamespace(
                 'Pim/Bundle/CatalogBundle/AttributeType',
                 'Pim/ProductStructure/Domain/AttributeType',
                 'Extract product attribute types'
             ),
 
+
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain/Model',
+                'Pim/CatalogStructure/Domain/Model',
+                'ChannelInterface',
+                'Extract channel in catalog structure'
+            ),
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain/Model',
+                'Pim/CatalogStructure/Domain/Model',
+                'ChannelTranslationInterface',
+                'Extract channel in catalog structure'
+            ),
+            new MoveLegacyClass(
+                'Pim/ProductEnrichment/Core/Domain/Model',
+                'Pim/CatalogStructure/Domain/Model',
+                'LocaleInterface',
+                'Extract Locale in catalog structure'
+            ),
+*/
 
 
 

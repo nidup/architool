@@ -23,9 +23,14 @@ final class FsClassExtractor implements ClassExtractor
         $srcPath = $this->projectPath.DIRECTORY_SEPARATOR.'src';
 
         $fileExtension = '.php';
-        $from = $srcPath.DIRECTORY_SEPARATOR.$source->getName().DIRECTORY_SEPARATOR.$class->getName().$fileExtension;
-        $to = $srcPath.DIRECTORY_SEPARATOR.$destination->getName().DIRECTORY_SEPARATOR.$class->getName().$fileExtension;
+        $fromFile = $srcPath.DIRECTORY_SEPARATOR.$source->getName().DIRECTORY_SEPARATOR.$class->getName().$fileExtension;
+        $toDir = $srcPath.DIRECTORY_SEPARATOR.$destination->getName();
+        $toFile = $toDir.DIRECTORY_SEPARATOR.$class->getName().$fileExtension;
 
-        $this->filesystem->rename($from, $to);
+        if (!$this->filesystem->exists($toDir)) {
+            $this->filesystem->mkdir($toDir);
+        }
+
+        $this->filesystem->rename($fromFile, $toFile);
     }
 }
