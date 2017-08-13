@@ -42,8 +42,34 @@ class HexagonalizeCommand extends Command
         $commands = [
             new MoveLegacyNamespace(
                 'Pim/Bundle/CatalogBundle/Elasticsearch',
-                'Pim/ProductEnrichment/Infrastructure/Elasticsearch',
+                'Pim/ProductEnrichment/Core/Infrastructure/Elasticsearch',
                 'Extract ElasticSearch infrastructure'
+            ),
+            new MoveLegacyNamespace(
+                'Pim/Bundle/CatalogBundle/Doctrine',
+                'Pim/ProductEnrichment/Core/Infrastructure/Doctrine',
+                'Extract Doctrine infrastructure'
+            ),
+
+            new MoveLegacyNamespace(
+                'Pim/Component/Api',
+                'Pim/ProductEnrichment/WebApi/Application/Api',
+                'Extract Web API application'
+            ),
+            new MoveLegacyNamespace(
+                'Pim/Bundle/ApiBundle',
+                'Pim/ProductEnrichment/WebApi/Infrastructure/Http',
+                'Extract Web API HTTP infrastructure'
+            ),
+            new MoveLegacyNamespace(
+                'Pim/ProductEnrichment/WebApi/Infrastructure/Http/Doctrine',
+                'Pim/ProductEnrichment/WebApi/Infrastructure/Doctrine',
+                'Extract Web API Doctrine infrastructure'
+            ),
+            new MoveLegacyNamespace(
+                'Pim/ProductEnrichment/WebApi/Infrastructure/Http/Command',
+                'Pim/ProductEnrichment/WebApi/Infrastructure/Cli/Command',
+                'Extract Web API Cli infrastructure'
             ),
         ];
 
@@ -66,7 +92,14 @@ class HexagonalizeCommand extends Command
 
     private function createBoundedContexts(string $path, OutputInterface $output)
     {
-        $contextNames = ['UserManagement', 'CatalogSetup', 'ProductStructure', 'ProductEnrichment'];
+        $contextNames = [
+            'UserManagement',
+            'CatalogSetup',
+            'ProductStructure',
+            'ProductEnrichment/Core',
+            'ProductEnrichment/WebApi',
+            'ProductEnrichment/ImportExport',
+        ];
         $command = new CreateBoundedContexts($contextNames);
         $repository = new FsBoundedContextRepository($path);
         $handler = new CreateBoundedContextsHandler($repository);

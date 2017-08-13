@@ -29,7 +29,9 @@ class FsNamespaceRenamer implements NamespaceRenamer
         $finder = new Finder();
         $finder->files()
             ->in($destinationPath)
-            ->name('*.php');
+            ->name('*.php')
+            ->notName('*Spec.php')
+            ->notName('*Integration.php');
 
         $sourceNamespacePattern = '/namespace '.str_replace('/', "\\\\", $source->getName()).'/';
         $destinationNamespaceDeclaration = 'namespace '.str_replace('/', "\\", $destination->getName());
