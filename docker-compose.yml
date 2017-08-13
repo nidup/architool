@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+    devtools:
+        image: matthiasnoback/php_workshop_tools_base:latest
+        volumes:
+            - ./:/opt
+            - ${COMPOSER_HOME}:/home/.composer
+        environment:
+            COMPOSER_HOME: /home/.composer
+            XDEBUG_CONFIG: "remote_host=${DOCKER_HOST_IP}"
+            PHP_IDE_CONFIG: "serverName=docker"
+        user: ${HOST_UID}:${HOST_GID}

@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+
+<?php
+require __DIR__.'/../vendor/autoload.php';
+
+use Nidup\Architool\Infrastructure\Cli\HexagonalizeCommand;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+
+$application = new Application('nidup-architool', '1.0.0');
+$command = new HexagonalizeCommand();
+$application->add($command);
+
+$application->run();

@@ -1,0 +1,21 @@
+{
+    "require": {
+        "symfony/console": "3.3.*",
+        "symfony/yaml": "3.3.*"
+    },
+    "require-dev": {
+        "php": "^7.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nicolas Dupont",
+            "email": "nicolas@akeneo.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    }
+}
