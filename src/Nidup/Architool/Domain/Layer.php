@@ -2,7 +2,7 @@
 
 namespace Nidup\Architool\Domain;
 
-final class BoundedContext
+final class Layer
 {
     private $name;
 
@@ -14,14 +14,5 @@ final class BoundedContext
     public function getName(): string
     {
         return $this->name;
-    }
-
-    public function getLayers(): array
-    {
-        return [
-            new Layer('Domain'),
-            new Layer('Application'),
-            new Layer('Infrastructure')
-        ];
     }
 }

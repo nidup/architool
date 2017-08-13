@@ -17,7 +17,11 @@ final class BoundedContextRepository implements \Nidup\Architool\Domain\BoundedC
     public function create(BoundedContext $context)
     {
         $fs = new Filesystem();
-        $newDir = $this->srcPath.DIRECTORY_SEPARATOR.$context->getName();
-        $fs->mkdir($newDir);
+        $contextDir = $this->srcPath.DIRECTORY_SEPARATOR.$context->getName();
+        $fs->mkdir($contextDir);
+        foreach ($context->getLayers() as $layer) {
+            $layerDir = $contextDir.DIRECTORY_SEPARATOR.$layer->getName();
+            $fs->mkdir($layerDir);
+        }
     }
 }
