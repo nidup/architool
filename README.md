@@ -1,27 +1,18 @@
 # Architool
 
-Experiments with the Akeneo PIM & hexagonal architecture :rocket:
+Experiments with Akeneo PIM code base, hexagonal architecture & DDD :rocket:
 
 ## Requirements
 
-- [Docker Engine](https://docs.docker.com/engine/installation/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
+- Composer
+- PHP 7.1
+- Git
+- Akeneo PIM dev version 1.8
 
-## Getting started
+## How To Install
 
-Have a Akeneo PIM 1.8 installed.
+Run `composr.phar update --prefer-dist` to install the tool's dependencies.
 
-## Install the tool
+## How To Use
 
-- Clone this repository and `cd` into it.
-- Run `docker-compose pull`.
-- Run `docker-compose up -d`.
-- Run `bin/docker/composer.sh update --prefer-dist` to install the project's dependencies.
-
-## Use it
-
-- Run `bin/docker/console.sh nidup:architool:hexagonalize /home/nico/fit/pim-ce-18
-
-## Thanks
-
-@matthiasnoback for the great devtools docker images ;)
+Run `bin/console nidup:architool:hexagonalize /home/nico/fit/pim-ce-18
