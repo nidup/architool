@@ -1,6 +1,9 @@
 <?php
 
-namespace Nidup\Architool\Application;
+namespace Nidup\Architool\Application\Workspace;
+
+use Nidup\Architool\Application\Workspace\InitializeWorkspace;
+use Nidup\Architool\Application\Workspace\WorkspaceCleaner;
 
 final class InitializeWorkspaceHandler
 {

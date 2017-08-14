@@ -1,7 +1,10 @@
 <?php
 
-namespace Nidup\Architool\Application;
+namespace Nidup\Architool\Application\Refactoring;
 
+use Nidup\Architool\Application\Refactoring\ClassExtractor;
+use Nidup\Architool\Application\Refactoring\ClassRenamer;
+use Nidup\Architool\Application\Refactoring\MoveLegacyClass;
 use Nidup\Architool\Domain\ClassName;
 use Nidup\Architool\Domain\CodeNamespace;
 

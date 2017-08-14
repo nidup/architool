@@ -2,8 +2,8 @@
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Application\NamespaceExtractor;
-use Nidup\Architool\Application\NamespaceRenamer;
+use Nidup\Architool\Application\Refactoring\NamespaceExtractor;
+use Nidup\Architool\Application\Refactoring\NamespaceRenamer;
 use Nidup\Architool\Domain\CodeNamespace;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;

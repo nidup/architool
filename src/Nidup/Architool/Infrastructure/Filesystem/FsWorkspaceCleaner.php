@@ -2,7 +2,7 @@
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Application\WorkspaceCleaner;
+use Nidup\Architool\Application\Workspace\WorkspaceCleaner;
 use Nidup\Architool\Infrastructure\Git\GitStasher;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;

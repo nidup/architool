@@ -2,7 +2,7 @@
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Application\ClassExtractor;
+use Nidup\Architool\Application\Refactoring\ClassExtractor;
 use Nidup\Architool\Domain\ClassName;
 use Nidup\Architool\Domain\CodeNamespace;
 use Symfony\Component\Filesystem\Filesystem;

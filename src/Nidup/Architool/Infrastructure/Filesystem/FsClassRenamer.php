@@ -2,7 +2,7 @@
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Application\ClassRenamer;
+use Nidup\Architool\Application\Refactoring\ClassRenamer;
 use Nidup\Architool\Domain\ClassName;
 use Nidup\Architool\Domain\CodeNamespace;
 use Symfony\Component\Finder\Finder;

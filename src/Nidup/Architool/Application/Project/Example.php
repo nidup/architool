@@ -2,10 +2,10 @@
 
 namespace Nidup\Architool\Application\Project;
 
-use Nidup\Architool\Application\CreateBoundedContexts;
-use Nidup\Architool\Application\MoveLegacyClass;
-use Nidup\Architool\Application\MoveLegacyNamespace;
-use Nidup\Architool\Application\Project;
+use Nidup\Architool\Application\BoundedContexts\CreateBoundedContexts;
+use Nidup\Architool\Application\Refactoring\MoveLegacyClass;
+use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
+use Nidup\Architool\Application\Project\Project;
 
 class Example implements Project
 {

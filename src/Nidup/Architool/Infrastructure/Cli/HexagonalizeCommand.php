@@ -2,15 +2,16 @@
 
 namespace Nidup\Architool\Infrastructure\Cli;
 
-use Nidup\Architool\Application\CreateBoundedContexts;
-use Nidup\Architool\Application\CreateBoundedContextsHandler;
-use Nidup\Architool\Application\InitializeWorkspace;
-use Nidup\Architool\Application\InitializeWorkspaceHandler;
-use Nidup\Architool\Application\MoveLegacyClass;
-use Nidup\Architool\Application\MoveLegacyClassHandler;
-use Nidup\Architool\Application\MoveLegacyNamespace;
-use Nidup\Architool\Application\MoveLegacyNamespaceHandler;
-use Nidup\Architool\Application\Project;
+use Nidup\Architool\Application\BoundedContexts\CreateBoundedContexts;
+use Nidup\Architool\Application\BoundedContexts\CreateBoundedContextsHandler;
+use Nidup\Architool\Application\Project\Example;
+use Nidup\Architool\Application\Workspace\InitializeWorkspace;
+use Nidup\Architool\Application\Workspace\InitializeWorkspaceHandler;
+use Nidup\Architool\Application\Refactoring\MoveLegacyClass;
+use Nidup\Architool\Application\Refactoring\MoveLegacyClassHandler;
+use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
+use Nidup\Architool\Application\Refactoring\MoveLegacyNamespaceHandler;
+use Nidup\Architool\Application\Project\Project;
 use Nidup\Architool\Infrastructure\Filesystem\FsBoundedContextRepository;
 use Nidup\Architool\Infrastructure\Filesystem\FsClassExtractor;
 use Nidup\Architool\Infrastructure\Filesystem\FsClassRenamer;
@@ -40,7 +41,7 @@ class HexagonalizeCommand extends Command
 
         $this->prepareWorkspace($path, $output);
 
-        $project = new Project\Example();
+        $project = new Example();
 
         $srcPath = $path.DIRECTORY_SEPARATOR.'src';
         $pimNamespacePath = $srcPath.DIRECTORY_SEPARATOR.'Pim';

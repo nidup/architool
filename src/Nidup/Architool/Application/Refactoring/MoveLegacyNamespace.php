@@ -1,20 +1,18 @@
 <?php
 
-namespace Nidup\Architool\Application;
+namespace Nidup\Architool\Application\Refactoring;
 
-final class MoveLegacyClass
+final class MoveLegacyNamespace
 {
     private $legacyNamespace;
     private $destinationNamespace;
     private $description;
-    private $className;
 
-    public function __construct(string $legacyNamespace, string $destinationNamespace, string $className, string $description)
+    public function __construct(string $legacyNamespace, string $destinationNamespace, string $description)
     {
         $this->legacyNamespace = $legacyNamespace;
         $this->destinationNamespace = $destinationNamespace;
         $this->description = $description;
-        $this->className = $className;
     }
 
     public function getLegacyNamespace(): string
@@ -30,10 +28,5 @@ final class MoveLegacyClass
     public function getDescription(): string
     {
         return $this->description;
-    }
-
-    public function getClassName(): string
-    {
-        return $this->className;
     }
 }

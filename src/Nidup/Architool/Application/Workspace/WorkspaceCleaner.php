@@ -1,6 +1,6 @@
 <?php
 
-namespace Nidup\Architool\Application;
+namespace Nidup\Architool\Application\Workspace;
 
 interface WorkspaceCleaner
 {

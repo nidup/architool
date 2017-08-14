@@ -1,6 +1,8 @@
 <?php
 
-namespace Nidup\Architool\Application;
+namespace Nidup\Architool\Application\Project;
+
+use Nidup\Architool\Application\BoundedContexts\CreateBoundedContexts;
 
 interface Project
 {
