@@ -9,7 +9,7 @@ use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
 class OneStep implements Step
 {
 
-    public function getName(): string
+    public function getDescription(): string
     {
         return 'my step name';
     }

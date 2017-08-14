@@ -2,9 +2,10 @@
 
 namespace Nidup\Architool\Infrastructure\Cli;
 
-use Nidup\Architool\Application\BoundedContexts\CreateBoundedContexts;
 use Nidup\Architool\Application\BoundedContexts\CreateBoundedContextsHandler;
 use Nidup\Architool\Application\Project\Pim\CommunityProject;
+use Nidup\Architool\Application\Workspace\FinalizeWorkspace;
+use Nidup\Architool\Application\Workspace\FinalizeWorkspaceHandler;
 use Nidup\Architool\Application\Workspace\InitializeWorkspace;
 use Nidup\Architool\Application\Workspace\InitializeWorkspaceHandler;
 use Nidup\Architool\Application\Refactoring\MoveLegacyClass;
@@ -13,6 +14,7 @@ use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
 use Nidup\Architool\Application\Refactoring\MoveLegacyNamespaceHandler;
 use Nidup\Architool\Application\Project\Project;
 use Nidup\Architool\Infrastructure\Filesystem\FsBoundedContextRepository;
+use Nidup\Architool\Infrastructure\Filesystem\FsCacheCleaner;
 use Nidup\Architool\Infrastructure\Filesystem\FsClassExtractor;
 use Nidup\Architool\Infrastructure\Filesystem\FsClassRenamer;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceExtractor;
@@ -36,16 +38,17 @@ class HexagonalizeCommand extends Command
     {
         $this->printTitle($output);
 
-        $path = $input->getArgument('path');
-        $this->prepareWorkspace($path, $output);
+        $projectPath = $input->getArgument('path');
+        $this->prepareWorkspace($projectPath, $output);
 
         $project = new CommunityProject();
 
-        $srcPath = $path.DIRECTORY_SEPARATOR.'src';
-        $pimNamespacePath = $srcPath.DIRECTORY_SEPARATOR.'Pim';
-        $this->createBoundedContexts($pimNamespacePath, $output, $project);
+        $srcPath = $projectPath.DIRECTORY_SEPARATOR.'src';
+        $this->createBoundedContexts($srcPath, $output, $project);
 
-        $this->moveLegacyPimNamespaces($path, $output, $project);
+        $this->moveLegacyPimNamespaces($projectPath, $output, $project);
+
+        $this->finalizeWorkspace($projectPath, $output);
     }
 
     private function moveLegacyPimNamespaces(string $path, OutputInterface $output, Project $project)
@@ -58,7 +61,7 @@ class HexagonalizeCommand extends Command
             $output->writeln(
                 sprintf(
                     '<info>>> %s</info>',
-                    $step->getName()
+                    $step->getDescription()
                 )
             );
 
@@ -115,6 +118,15 @@ class HexagonalizeCommand extends Command
         $handler = new InitializeWorkspaceHandler($cleaner);
         $handler->handle($command);
         $output->writeln(sprintf('<info>Project workspace "%s" is ready</info>', $projectPath));
+    }
+
+    private function finalizeWorkspace(string $projectPath, OutputInterface $output)
+    {
+        $command = new FinalizeWorkspace();
+        $cleaner = new FsCacheCleaner($projectPath);
+        $handler = new FinalizeWorkspaceHandler($cleaner);
+        $handler->handle($command);
+        $output->writeln(sprintf('<info>Project cache has been cleaned</info>', $projectPath));
     }
 
     private function printTitle(OutputInterface $output)
