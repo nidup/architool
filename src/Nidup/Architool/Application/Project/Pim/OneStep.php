@@ -1,26 +1,17 @@
 <?php
 
-namespace Nidup\Architool\Application\Project;
+namespace Nidup\Architool\Application\Project\Pim;
 
-use Nidup\Architool\Application\BoundedContexts\CreateBoundedContexts;
+use Nidup\Architool\Application\Project\Step;
 use Nidup\Architool\Application\Refactoring\MoveLegacyClass;
 use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
-use Nidup\Architool\Application\Project\Project;
 
-class Example implements Project
+class OneStep implements Step
 {
-    public function createBoundedContextsCommand() : CreateBoundedContexts
-    {
-        $contextNames = [
-            'UserManagement',
-            'CatalogSetup',
-            'ProductStructure',
-            'ProductEnrichment/Core',
-            'ProductEnrichment/WebApi',
-            'ProductEnrichment/ImportExport',
-        ];
 
-        return new CreateBoundedContexts($contextNames);
+    public function getName(): string
+    {
+        return 'my step name';
     }
 
     public function createReworkCodebaseCommands() : array
@@ -32,7 +23,6 @@ class Example implements Project
                 'Pim/ProductEnrichment/Core/Domain',
                 'Extract product enrichment core business'
             ),
-
 
             new MoveLegacyClass(
                 'Pim/ProductEnrichment/Core/Domain',

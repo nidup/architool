@@ -4,7 +4,7 @@ namespace Nidup\Architool\Infrastructure\Cli;
 
 use Nidup\Architool\Application\BoundedContexts\CreateBoundedContexts;
 use Nidup\Architool\Application\BoundedContexts\CreateBoundedContextsHandler;
-use Nidup\Architool\Application\Project\Example;
+use Nidup\Architool\Application\Project\Pim\CommunityProject;
 use Nidup\Architool\Application\Workspace\InitializeWorkspace;
 use Nidup\Architool\Application\Workspace\InitializeWorkspaceHandler;
 use Nidup\Architool\Application\Refactoring\MoveLegacyClass;
@@ -41,7 +41,7 @@ class HexagonalizeCommand extends Command
 
         $this->prepareWorkspace($path, $output);
 
-        $project = new Example();
+        $project = new CommunityProject();
 
         $srcPath = $path.DIRECTORY_SEPARATOR.'src';
         $pimNamespacePath = $srcPath.DIRECTORY_SEPARATOR.'Pim';
@@ -52,42 +52,52 @@ class HexagonalizeCommand extends Command
 
     private function moveLegacyPimNamespaces(string $path, OutputInterface $output, Project $project)
     {
-        $commands = $project->createReworkCodebaseCommands();
+        $steps = $project->createOrderedSteps();
+        foreach ($steps as $step) {
 
-        $mover = new FsNamespaceExtractor($path);
-        $renamer = new FsNamespaceRenamer($path);
-        $namespaceHandler = new MoveLegacyNamespaceHandler($mover, $renamer);
+            $commands = $step->createReworkCodebaseCommands();
 
+            $output->writeln(
+                sprintf(
+                    '<info>>> %s</info>',
+                    $step->getName()
+                )
+            );
 
-        $mover = new FsClassExtractor($path);
-        $renamer = new FsClassRenamer($path);
-        $classHandler = new MoveLegacyClassHandler($mover, $renamer);
+            $mover = new FsNamespaceExtractor($path);
+            $renamer = new FsNamespaceRenamer($path);
+            $namespaceHandler = new MoveLegacyNamespaceHandler($mover, $renamer);
 
-        /** @var MoveLegacyNamespace $command */
-        foreach ($commands as $command) {
-            if ($command instanceof MoveLegacyNamespace) {
-                $namespaceHandler->handle($command);
-                $output->writeln(
-                    sprintf(
-                        '<info>Legacy namespace "%s" has been extracted to "%s" in order to "%s"</info>',
-                        $command->getLegacyNamespace(),
-                        $command->getDestinationNamespace(),
-                        $command->getDescription()
-                    )
-                );
+            $mover = new FsClassExtractor($path);
+            $renamer = new FsClassRenamer($path);
+            $classHandler = new MoveLegacyClassHandler($mover, $renamer);
 
-            } else if ($command instanceof MoveLegacyClass) {
-                $classHandler->handle($command);
-                $output->writeln(
-                    sprintf(
-                        '<info>Legacy class "%s" has been extracted to "%s" in order to "%s"</info>',
-                        $command->getClassName(),
-                        $command->getDestinationNamespace(),
-                        $command->getDescription()
-                    )
-                );
+            /** @var MoveLegacyNamespace $command */
+            foreach ($commands as $command) {
+                if ($command instanceof MoveLegacyNamespace) {
+                    $namespaceHandler->handle($command);
+                    $output->writeln(
+                        sprintf(
+                            '<info>Legacy namespace "%s" has been extracted to "%s" in order to "%s"</info>',
+                            $command->getLegacyNamespace(),
+                            $command->getDestinationNamespace(),
+                            $command->getDescription()
+                        )
+                    );
+
+                } else if ($command instanceof MoveLegacyClass) {
+                    $classHandler->handle($command);
+                    $output->writeln(
+                        sprintf(
+                            '<info>Legacy class "%s" has been extracted to "%s" in order to "%s"</info>',
+                            $command->getClassName(),
+                            $command->getDestinationNamespace(),
+                            $command->getDescription()
+                        )
+                    );
+                }
+
             }
-
         }
     }
 

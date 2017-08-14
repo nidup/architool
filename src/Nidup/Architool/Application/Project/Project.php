@@ -8,5 +8,5 @@ interface Project
 {
     public function createBoundedContextsCommand() : CreateBoundedContexts;
 
-    public function createReworkCodebaseCommands() : array;
+    public function createOrderedSteps() : array;
 }
