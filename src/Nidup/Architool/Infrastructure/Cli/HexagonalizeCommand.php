@@ -37,8 +37,6 @@ class HexagonalizeCommand extends Command
         $this->printTitle($output);
 
         $path = $input->getArgument('path');
-        $output->writeln(sprintf("<info>PIM is installed in %s</info>", $path));
-
         $this->prepareWorkspace($path, $output);
 
         $project = new CommunityProject();
