@@ -14,9 +14,6 @@ class CommunityProject implements Project
             'Akeneo/Pim/ProductStructure',
             'Akeneo/Pim/ProductEnrichment',
             'Akeneo/Pim/UserManagement',
-/*            'Akeneo/Pim/ProductEnrichment/Core',
-            'Akeneo/Pim/ProductEnrichment/WebApi',
-            'Akeneo/Pim/ProductEnrichment/ImportExport',*/
         ];
 
         return new CreateBoundedContexts($contextNames);
@@ -26,8 +23,8 @@ class CommunityProject implements Project
     {
         return [
             new MoveAkeneoCommon(),
-            new CreateProductEnrichment()
-            //new OneStep()
+            new CreateProductEnrichment(),
+            new CreateUserManagement()
         ];
     }
 

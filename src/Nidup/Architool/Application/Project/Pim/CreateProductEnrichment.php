@@ -159,6 +159,19 @@ class CreateProductEnrichment implements Step
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/ImportExport',
                 'Configure Import/Export Doctrine infrastructure spec'
             ),
+
+
+            // Edition Application
+            new MoveLegacyNamespace(
+                'Pim/Component/Enrich',
+                'Akeneo/Pim/ProductEnrichment/Application/Edition',
+                'Extract Edition features in application'
+            ),
+            new ReconfigureSpecNamespace(
+                'Pim/Component/Enrich',
+                'Akeneo/Pim/ProductEnrichment/Application/Edition',
+                'Configure Edition specs'
+            ),
         ];
 
         return $commands;
