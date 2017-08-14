@@ -6,6 +6,8 @@ use Nidup\Architool\Application\BoundedContexts\CreateBoundedContextsHandler;
 use Nidup\Architool\Application\Project\Pim\CommunityProject;
 use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespace;
 use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespaceHandler;
+use Nidup\Architool\Application\Refactoring\ReplaceCodeInClass;
+use Nidup\Architool\Application\Refactoring\ReplaceCodeInClassHandler;
 use Nidup\Architool\Application\Workspace\FinalizeWorkspace;
 use Nidup\Architool\Application\Workspace\FinalizeWorkspaceHandler;
 use Nidup\Architool\Application\Workspace\InitializeWorkspace;
@@ -19,6 +21,7 @@ use Nidup\Architool\Infrastructure\Filesystem\FsBoundedContextRepository;
 use Nidup\Architool\Infrastructure\Filesystem\FsCacheCleaner;
 use Nidup\Architool\Infrastructure\Filesystem\FsClassExtractor;
 use Nidup\Architool\Infrastructure\Filesystem\FsClassRenamer;
+use Nidup\Architool\Infrastructure\Filesystem\FsCodeReplacer;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceExtractor;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceRenamer;
 use Nidup\Architool\Infrastructure\Filesystem\FsSpecNamespaceConfigurator;
@@ -79,6 +82,9 @@ class HexagonalizeCommand extends Command
             $configurator = new FsSpecNamespaceConfigurator($path);
             $specConfigHandler = new ConfigureSpecNamespaceHandler($configurator);
 
+            $codeReplacer = new FsCodeReplacer($path);
+            $codeReplacerHandler = new ReplaceCodeInClassHandler($codeReplacer);
+
             foreach ($commands as $command) {
                 if ($command instanceof MoveLegacyNamespace) {
                     $namespaceHandler->handle($command);
@@ -109,6 +115,16 @@ class HexagonalizeCommand extends Command
                             $command->getDestinationNamespace()
                         )
                     );
+                } else if ($command instanceof ReplaceCodeInClass) {
+                    $codeReplacerHandler->handle($command);
+                    $output->writeln(
+                        sprintf(
+                            '<info>Code fragment has been replaced by "%s"</info>',
+                            $command->getReplacementCode()
+                        )
+                    );
+                } else {
+                    throw new \Exception(printf("Unknown command %s", get_class($command)));
                 }
             }
         }

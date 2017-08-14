@@ -36,7 +36,32 @@ class FsFileUpdater
         if ($nbReplacements !== 1) {
             throw new \Exception(
                 sprintf(
-                    'No namespace declaration "%s" in the file %s',
+                    'Expecting to find exactly once the following content to replace "%s" in the file %s',
+                    $toReplacePattern,
+                    $file->getRealPath()
+                )
+            );
+        }
+
+        file_put_contents($file->getRealPath(), $newContent);
+    }
+
+    public function updateAtLeastOnce(\SplFileInfo $file, string $toReplacePattern, string $replacementValue)
+    {
+        $content = file_get_contents($file->getRealPath());
+        $nbReplacements = 0;
+        $newContent = preg_replace(
+            $toReplacePattern,
+            $replacementValue,
+            $content,
+            -1,
+            $nbReplacements
+        );
+
+        if ($nbReplacements === 0 ) {
+            throw new \Exception(
+                sprintf(
+                    'Expecting to find at least once the following content to replace "%s" in the file %s',
                     $toReplacePattern,
                     $file->getRealPath()
                 )
