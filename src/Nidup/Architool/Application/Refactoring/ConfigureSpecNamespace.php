@@ -4,26 +4,20 @@ namespace Nidup\Architool\Application\Refactoring;
 
 final class ConfigureSpecNamespace
 {
-    private $legacyNamespace;
-    private $destinationNamespace;
+    private $namespace;
     private $description;
 
-    public function __construct(string $legacyNamespace, string $destinationNamespace, string $description)
+    public function __construct(string $namespace, string $description)
     {
-        $this->legacyNamespace = $legacyNamespace;
-        $this->destinationNamespace = $destinationNamespace;
+        $this->namespace = $namespace;
         $this->description = $description;
     }
 
-    public function getLegacyNamespace(): string
+    public function getNamespace(): string
     {
-        return $this->legacyNamespace;
+        return $this->namespace;
     }
 
-    public function getDestinationNamespace(): string
-    {
-        return $this->destinationNamespace;
-    }
 
     public function getDescription(): string
     {

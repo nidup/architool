@@ -15,8 +15,7 @@ final class ConfigureSpecNamespaceHandler
 
     public function handle(ConfigureSpecNamespace $command): void
     {
-        $from = new CodeNamespace($command->getLegacyNamespace());
-        $to = new CodeNamespace($command->getDestinationNamespace());
-        $this->configurator->configure($from, $to);
+        $namespace = new CodeNamespace($command->getNamespace());
+        $this->configurator->configure($namespace);
     }
 }

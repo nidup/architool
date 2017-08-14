@@ -6,5 +6,7 @@ use Nidup\Architool\Domain\CodeNamespace;
 
 interface SpecNamespaceConfigurator
 {
-    public function configure(CodeNamespace $from, CodeNamespace $to);
+    public function reconfigure(CodeNamespace $fromNamespace, CodeNamespace $toNamespace);
+
+    public function configure(CodeNamespace $newNamespace);
 }

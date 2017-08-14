@@ -6,6 +6,8 @@ use Nidup\Architool\Application\BoundedContexts\CreateBoundedContextsHandler;
 use Nidup\Architool\Application\Project\Pim\CommunityProject;
 use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespace;
 use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespaceHandler;
+use Nidup\Architool\Application\Refactoring\ReconfigureSpecNamespace;
+use Nidup\Architool\Application\Refactoring\ReconfigureSpecNamespaceHandler;
 use Nidup\Architool\Application\Refactoring\ReplaceCodeInClass;
 use Nidup\Architool\Application\Refactoring\ReplaceCodeInClassHandler;
 use Nidup\Architool\Application\Workspace\FinalizeWorkspace;
@@ -80,6 +82,7 @@ class HexagonalizeCommand extends Command
             $classHandler = new MoveLegacyClassHandler($mover, $renamer);
 
             $configurator = new FsSpecNamespaceConfigurator($path);
+            $specReconfigHandler = new ReconfigureSpecNamespaceHandler($configurator);
             $specConfigHandler = new ConfigureSpecNamespaceHandler($configurator);
 
             $codeReplacer = new FsCodeReplacer($path);
@@ -109,6 +112,14 @@ class HexagonalizeCommand extends Command
                     );
                 } else if ($command instanceof ConfigureSpecNamespace) {
                     $specConfigHandler->handle($command);
+                    $output->writeln(
+                        sprintf(
+                            '<info>Specs have been configured to match "%s"</info>',
+                            $command->getNamespace()
+                        )
+                    );
+                } else if ($command instanceof ReconfigureSpecNamespace) {
+                    $specReconfigHandler->handle($command);
                     $output->writeln(
                         sprintf(
                             '<info>Specs have been re-configured to match "%s"</info>',

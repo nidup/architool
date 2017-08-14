@@ -17,23 +17,89 @@ final class FsSpecNamespaceConfigurator implements SpecNamespaceConfigurator
         $this->fileUpdater = new FsFileUpdater();
     }
 
-    public function configure(CodeNamespace $source, CodeNamespace $destination)
+    public function reconfigure(CodeNamespace $fromNamespace, CodeNamespace $toNamespace)
     {
+        $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $fromNamespace->getName()).'/';
+        $destinationNamespace = ''.str_replace('/', "\\", $toNamespace->getName());
+
+        $sourcePathPattern = '/src\/'.str_replace('/', "\/", $fromNamespace->getName()).'/';
+        $destinationPath = 'src/'.$toNamespace->getName();
+
+        $this->haveToConfigureMainFile(
+            $sourceNamespacePattern,
+            $destinationNamespace,
+            $sourcePathPattern,
+            $destinationPath
+        );
+
+        $this->mayConfigureExtraFiles(
+            $sourceNamespacePattern,
+            $destinationNamespace,
+            $sourcePathPattern,
+            $destinationPath
+        );
+    }
+
+    public function configure(CodeNamespace $newNamespace)
+    {
+        $namespace = ''.str_replace('/', "\\", $newNamespace->getName());
+        $namespacePath = 'src/'.$newNamespace->getName();
+        $nameTokens = explode('/', $newNamespace->getName());
+        $configName = end($nameTokens);
+
+        $newConfiguration = sprintf(
+            "\n    %s:\n        namespace: %s\n        psr4_prefix: %s\n        spec_path: %s\n        src_path: %s",
+            $configName,
+            $namespace,
+            $namespace,
+            $namespacePath,
+            $namespacePath
+        );
+
         $finder = new Finder();
         $finder->files()
             ->in($this->projectPath)
+            ->name('phpspec.yml*')
+            ->depth(0);
+
+        foreach ($finder as $file) {
+            $this->fileUpdater->appendContent($file, $newConfiguration);
+        }
+    }
+
+    private function haveToConfigureMainFile(
+        string $sourceNamespacePattern,
+        string $destinationNamespace,
+        string $sourcePathPattern,
+        string $destinationPath
+    ) {
+        $finder = new Finder();
+        $finder->files()
+            ->in($this->projectPath)
+            ->name('phpspec.yml*')
+            ->depth(0);
+
+        foreach ($finder as $file) {
+            $this->fileUpdater->updateAtLeastOnce($file, $sourceNamespacePattern, $destinationNamespace);
+            $this->fileUpdater->updateAtLeastOnce($file, $sourcePathPattern, $destinationPath);
+        }
+    }
+
+    private function mayConfigureExtraFiles(
+        string $sourceNamespacePattern,
+        string $destinationNamespace,
+        string $sourcePathPattern,
+        string $destinationPath
+    ) {
+        $srcPath = $this->projectPath.DIRECTORY_SEPARATOR.'src';
+        $finder = new Finder();
+        $finder->files()
+            ->in($srcPath)
             ->name('phpspec.yml*');
-
-        $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $source->getName()).'/';
-        $destinationNamespace = ''.str_replace('/', "\\", $destination->getName());
-
-        $sourcePathPattern = '/src\/'.str_replace('/', "\/", $source->getName()).'/';
-        $destinationPath = 'src/'.$destination->getName();
 
         foreach ($finder as $file) {
             $this->fileUpdater->updateIfPossible($file, $sourceNamespacePattern, $destinationNamespace);
             $this->fileUpdater->updateIfPossible($file, $sourcePathPattern, $destinationPath);
         }
     }
-
 }

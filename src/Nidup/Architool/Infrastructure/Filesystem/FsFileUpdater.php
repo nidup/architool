@@ -70,4 +70,11 @@ class FsFileUpdater
 
         file_put_contents($file->getRealPath(), $newContent);
     }
+
+    public function appendContent(\SplFileInfo $file, string $contentToAppend)
+    {
+        $content = file_get_contents($file->getRealPath());
+        $newContent = $content.$contentToAppend;
+        file_put_contents($file->getRealPath(), $newContent);
+    }
 }
