@@ -4,6 +4,8 @@ namespace Nidup\Architool\Infrastructure\Cli;
 
 use Nidup\Architool\Application\BoundedContexts\CreateBoundedContextsHandler;
 use Nidup\Architool\Application\Project\Pim\CommunityProject;
+use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespace;
+use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespaceHandler;
 use Nidup\Architool\Application\Workspace\FinalizeWorkspace;
 use Nidup\Architool\Application\Workspace\FinalizeWorkspaceHandler;
 use Nidup\Architool\Application\Workspace\InitializeWorkspace;
@@ -19,6 +21,7 @@ use Nidup\Architool\Infrastructure\Filesystem\FsClassExtractor;
 use Nidup\Architool\Infrastructure\Filesystem\FsClassRenamer;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceExtractor;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceRenamer;
+use Nidup\Architool\Infrastructure\Filesystem\FsSpecNamespaceConfigurator;
 use Nidup\Architool\Infrastructure\Filesystem\FsWorkspaceCleaner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -73,7 +76,9 @@ class HexagonalizeCommand extends Command
             $renamer = new FsClassRenamer($path);
             $classHandler = new MoveLegacyClassHandler($mover, $renamer);
 
-            /** @var MoveLegacyNamespace $command */
+            $configurator = new FsSpecNamespaceConfigurator($path);
+            $specConfigHandler = new ConfigureSpecNamespaceHandler($configurator);
+
             foreach ($commands as $command) {
                 if ($command instanceof MoveLegacyNamespace) {
                     $namespaceHandler->handle($command);
@@ -96,8 +101,15 @@ class HexagonalizeCommand extends Command
                             $command->getDescription()
                         )
                     );
+                } else if ($command instanceof ConfigureSpecNamespace) {
+                    $specConfigHandler->handle($command);
+                    $output->writeln(
+                        sprintf(
+                            '<info>Specs have been re-configured to match "%s"</info>',
+                            $command->getDestinationNamespace()
+                        )
+                    );
                 }
-
             }
         }
     }
