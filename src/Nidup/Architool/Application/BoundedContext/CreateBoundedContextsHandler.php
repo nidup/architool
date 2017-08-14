@@ -1,8 +1,8 @@
 <?php
 
-namespace Nidup\Architool\Application\BoundedContexts;
+namespace Nidup\Architool\Application\BoundedContext;
 
-use Nidup\Architool\Application\BoundedContexts\CreateBoundedContexts;
+use Nidup\Architool\Application\BoundedContext\CreateBoundedContexts;
 use Nidup\Architool\Domain\BoundedContext;
 use Nidup\Architool\Domain\BoundedContextRepository;
 

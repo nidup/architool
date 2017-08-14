@@ -1,6 +1,6 @@
 <?php
 
-namespace Nidup\Architool\Application\BoundedContexts;
+namespace Nidup\Architool\Application\BoundedContext;
 
 final class CreateBoundedContexts
 {

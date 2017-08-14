@@ -2,7 +2,7 @@
 
 namespace Nidup\Architool\Application\Project;
 
-use Nidup\Architool\Application\BoundedContexts\CreateBoundedContexts;
+use Nidup\Architool\Application\BoundedContext\CreateBoundedContexts;
 
 interface Project
 {

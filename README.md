@@ -15,4 +15,4 @@ Run `composer.phar update --prefer-dist` to install the tool's dependencies.
 
 ## How To Use
 
-Run `bin/console nidup:architool:hexagonalize /home/nico/fit/pim-ce-18`
+Run `bin/console nidup:architool:hexagonalize /home/nico/git/pim-ce-18`

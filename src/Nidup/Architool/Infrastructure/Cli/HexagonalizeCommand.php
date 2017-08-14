@@ -2,7 +2,7 @@
 
 namespace Nidup\Architool\Infrastructure\Cli;
 
-use Nidup\Architool\Application\BoundedContexts\CreateBoundedContextsHandler;
+use Nidup\Architool\Application\BoundedContext\CreateBoundedContextsHandler;
 use Nidup\Architool\Application\Project\Pim\CommunityProject;
 use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespace;
 use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespaceHandler;
