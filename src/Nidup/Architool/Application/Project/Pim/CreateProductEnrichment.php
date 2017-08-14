@@ -56,58 +56,109 @@ class CreateProductEnrichment implements Step
                 'Configure ElasticSearch specs'
             ),
 
-
-        /*
-            new ConfigureSpecNamespace(
-                'Pim/Bundle/CatalogBundle/Elasticsearch',
-                'Akeneo/Pim/ProductEnrichment/Infrastructure/Elasticsearch',
-                'Configure ElasticSearch specs'
-            ),
-
-            new MoveLegacyNamespace(
-                'Pim/Bundle/CatalogBundle/Elasticsearch',
-                'Pim/ProductEnrichment/Core/Infrastructure/Elasticsearch',
-                'Extract ElasticSearch infrastructure'
-            ),
-            new MoveLegacyNamespace(
-                'Pim/Bundle/CatalogBundle/spec/Elasticsearch',
-                'Pim/ProductEnrichment/Core/Infrastructure/spec/Elasticsearch',
-                'Extract ElasticSearch infrastructure'
-            ),
-
+            // Infrastructure Doctrine
             new MoveLegacyNamespace(
                 'Pim/Bundle/CatalogBundle/Doctrine',
-                'Pim/ProductEnrichment/Core/Infrastructure/Doctrine',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine',
                 'Extract Doctrine infrastructure'
             ),
-            // move its specs too!
             new MoveLegacyNamespace(
                 'Pim/Bundle/CatalogBundle/spec/Doctrine',
-                'Pim/ProductEnrichment/Core/Infrastructure/spec/Doctrine',
-                'Extract Doctrine infrastructure specs'
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/spec',
+                'Extract specs for Doctrine infrastructure'
+            ),
+            new ConfigureSpecNamespace(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine',
+                'Configure Doctrine specs'
+            ),
+            new ReplaceCodeInClass(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/spec/Common/Saver/',
+                'ProductUniqueDataSynchronizerSpec',
+                "namespace spec\\\\Pim\\\\Bundle\\\\CatalogBundle\\\\Saver\\\\Common",
+                "namespace spec\Akeneo\Pim\ProductEnrichment\Infrastructure\Doctrine\Common\Saver",
+                'Fix namespace of ProductUniqueDataSynchronizerSpec misplaced on master'
             ),
 
+            // API Application
             new MoveLegacyNamespace(
                 'Pim/Component/Api',
-                'Pim/ProductEnrichment/WebApi/Application/Api',
-                'Extract Web API application'
+                'Akeneo/Pim/ProductEnrichment/Application/Api',
+                'Extract API features in application'
             ),
+            new ReconfigureSpecNamespace(
+                'Pim/Component/Api',
+                'Akeneo/Pim/ProductEnrichment/Application/Api',
+                'Configure API specs'
+            ),
+
+            // API Infrastructure Http Web
             new MoveLegacyNamespace(
                 'Pim/Bundle/ApiBundle',
-                'Pim/ProductEnrichment/WebApi/Infrastructure/Http',
-                'Extract Web API HTTP infrastructure'
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Http/Api',
+                'Extract API Http infrastructure'
             ),
-            new MoveLegacyNamespace(
-                'Pim/ProductEnrichment/WebApi/Infrastructure/Http/Doctrine',
-                'Pim/ProductEnrichment/WebApi/Infrastructure/Doctrine',
-                'Extract Web API Doctrine infrastructure'
+            new ReconfigureSpecNamespace(
+                'Pim/Bundle/ApiBundle',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Http/Api',
+                'Configure API Http infrastructure specs'
             ),
+            // API Infrastructure Cli
             new MoveLegacyNamespace(
-                'Pim/ProductEnrichment/WebApi/Infrastructure/Http/Command',
-                'Pim/ProductEnrichment/WebApi/Infrastructure/Cli/Command',
-                'Extract Web API Cli infrastructure'
-            ),*/
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Http/Api/Command',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Cli/Api/Command',
+                'Extract API Cli infrastructure'
+            ),
+            // API Infrastructure Doctrine
+            new MoveLegacyNamespace(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Http/Api/Doctrine',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/Api',
+                'Extract API Doctrine infrastructure'
+            ),
 
+            // Import/Export Application
+            new MoveLegacyNamespace(
+                'Pim/Component/Connector',
+                'Akeneo/Pim/ProductEnrichment/Application/ImportExport',
+                'Extract Import/Export features in application'
+            ),
+            new ReconfigureSpecNamespace(
+                'Pim/Component/Connector',
+                'Akeneo/Pim/ProductEnrichment/Application/ImportExport',
+                'Configure Import/Export specs'
+            ),
+
+            // Import/Export Infrastructure Symfony
+            new MoveLegacyNamespace(
+                'Pim/Bundle/ConnectorBundle',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/ImportExport',
+                'Extract Import/Export symfony infrastructure'
+            ),
+            new ReconfigureSpecNamespace(
+                'Pim/Bundle/ConnectorBundle',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/ImportExport',
+                'Configure Import/Export symfony infrastructure specs'
+            ),
+            // Import/Export Infrastructure Cli
+            new MoveLegacyNamespace(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/ImportExport/Command',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Cli/ImportExport/Command',
+                'Extract Import/Export Cli infrastructure'
+            ),
+            // Import/Export Infrastructure Doctrine
+            new MoveLegacyNamespace(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/ImportExport/Doctrine',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/ImportExport',
+                'Extract Import/Export Doctrine infrastructure'
+            ),
+            new MoveLegacyNamespace(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/ImportExport/spec/Doctrine',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/ImportExport/spec',
+                'Extract Import/Export Doctrine infrastructure spec'
+            ),
+            new ConfigureSpecNamespace(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/ImportExport',
+                'Configure Import/Export Doctrine infrastructure spec'
+            ),
         ];
 
         return $commands;
