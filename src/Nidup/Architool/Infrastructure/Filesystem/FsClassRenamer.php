@@ -23,6 +23,8 @@ final class FsClassRenamer implements ClassRenamer
         $this->changeDeclaration($source, $destination, $className);
         $this->changeClassesReferences($source, $destination, $className);
         $this->changeServicesReferences($source, $destination, $className);
+        $this->addMissingClassReferencesToExNeighbourClasses($source, $destination, $className);
+        $this->addMissingExNeighboursReferencesToTheClass($source, $destination, $className);
         $this->changeAppKernelBundles($source, $destination, $className);
         $this->changeAppConfiguration($source, $destination, $className);
     }
@@ -61,6 +63,72 @@ final class FsClassRenamer implements ClassRenamer
 
         foreach ($finder as $file) {
             $this->fileUpdater->updateIfPossible($file, $sourceNamespacePattern, $destinationNamespace);
+        }
+    }
+
+    private function addMissingClassReferencesToExNeighbourClasses(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
+    {
+        $finder = new Finder();
+
+        $srcPath = $this->projectPath.DIRECTORY_SEPARATOR.'src';
+        $oldNeighbourPath = $srcPath.DIRECTORY_SEPARATOR.$source->getName();
+
+        $finder->files()
+            ->in($oldNeighbourPath)
+            ->depth(0)
+            ->name('*.php');
+
+        $classSearchPattern = '/'.$className->getName().'/';
+        $missingMovedClassUse = 'use '.str_replace('/', "\\", $destination->getName()."\\".$className->getName()).';';
+
+        foreach ($finder as $file) {
+            if ($this->fileUpdater->containsContent($file, $classSearchPattern)) {
+                $this->fileUpdater->insertUseStatementAfterNamespace($file, $missingMovedClassUse);
+            }
+        }
+    }
+
+    private function addMissingExNeighboursReferencesToTheClass(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
+    {
+        $srcPath = $this->projectPath.DIRECTORY_SEPARATOR.'src';
+        $newClassPath = $srcPath.DIRECTORY_SEPARATOR.$destination->getName();
+        $finder = new Finder();
+        $finder->files()
+            ->in($newClassPath)
+            ->depth(0)
+            ->name($className->getName().'.php');
+
+        $movedClassFile = null;
+        foreach ($finder as $file) {
+            $movedClassFile = $file;
+            break;
+        }
+
+        $finder = new Finder();
+
+        $srcPath = $this->projectPath.DIRECTORY_SEPARATOR.'src';
+        $oldNeighbourPath = $srcPath.DIRECTORY_SEPARATOR.$source->getName();
+
+        $finder->files()
+            ->in($oldNeighbourPath)
+            ->depth(0)
+            ->name('*.php');
+
+        foreach ($finder as $file) {
+            $neighbourClassName = str_replace('.php','', $file->getFilename());
+            $missingNeighbougClassUse = 'use '.str_replace('/', "\\", $source->getName()."\\".$neighbourClassName).';';
+
+            $neighbourClassNameTypehintPattern = '/'.$neighbourClassName.' /';
+            $neighbourClassNameExtendsSeveralPattern = '/ '.$neighbourClassName.',/';
+            $neighbourClassNameExtendsOncePattern = '/ '.$neighbourClassName.'/';
+
+            if ($this->fileUpdater->containsContent($movedClassFile, $neighbourClassNameTypehintPattern)) {
+                $this->fileUpdater->insertUseStatementAfterNamespace($movedClassFile, $missingNeighbougClassUse);
+            } else if ($this->fileUpdater->containsContent($movedClassFile, $neighbourClassNameExtendsSeveralPattern)) {
+                $this->fileUpdater->insertUseStatementAfterNamespace($movedClassFile, $missingNeighbougClassUse);
+            } else if ($this->fileUpdater->containsContent($movedClassFile, $neighbourClassNameExtendsOncePattern)) {
+                $this->fileUpdater->insertUseStatementAfterNamespace($movedClassFile, $missingNeighbougClassUse);
+            }
         }
     }
 
