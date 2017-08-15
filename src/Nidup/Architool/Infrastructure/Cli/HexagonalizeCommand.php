@@ -6,6 +6,8 @@ use Nidup\Architool\Application\BoundedContext\CreateBoundedContextsHandler;
 use Nidup\Architool\Application\Project\Pim\CommunityProject;
 use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespace;
 use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespaceHandler;
+use Nidup\Architool\Application\Refactoring\MoveLegacySpec;
+use Nidup\Architool\Application\Refactoring\MoveLegacySpecHandler;
 use Nidup\Architool\Application\Refactoring\ReconfigureSpecNamespace;
 use Nidup\Architool\Application\Refactoring\ReconfigureSpecNamespaceHandler;
 use Nidup\Architool\Application\Refactoring\ReplaceCodeInClass;
@@ -27,6 +29,7 @@ use Nidup\Architool\Infrastructure\Filesystem\FsCodeReplacer;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceExtractor;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceRenamer;
 use Nidup\Architool\Infrastructure\Filesystem\FsSpecNamespaceConfigurator;
+use Nidup\Architool\Infrastructure\Filesystem\FsSpecRenamer;
 use Nidup\Architool\Infrastructure\Filesystem\FsWorkspaceCleaner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -81,6 +84,10 @@ class HexagonalizeCommand extends Command
             $renamer = new FsClassRenamer($path);
             $classHandler = new MoveLegacyClassHandler($mover, $renamer);
 
+            $mover = new FsClassExtractor($path);
+            $renamer = new FsSpecRenamer($path);
+            $specHandler = new MoveLegacySpecHandler($mover, $renamer);
+
             $configurator = new FsSpecNamespaceConfigurator($path);
             $specReconfigHandler = new ReconfigureSpecNamespaceHandler($configurator);
             $specConfigHandler = new ConfigureSpecNamespaceHandler($configurator);
@@ -108,6 +115,15 @@ class HexagonalizeCommand extends Command
                             $command->getClassName(),
                             $command->getDestinationNamespace(),
                             $command->getDescription()
+                        )
+                    );
+                } else if ($command instanceof MoveLegacySpec) {
+                    $specHandler->handle($command);
+                    $output->writeln(
+                        sprintf(
+                            '<info>Legacy spec "%s" has been extracted to "%s"</info>',
+                            $command->getClassName(),
+                            $command->getDestinationNamespace()
                         )
                     );
                 } else if ($command instanceof ConfigureSpecNamespace) {

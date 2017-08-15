@@ -5,18 +5,18 @@ namespace Nidup\Architool\Application\Refactoring;
 use Nidup\Architool\Domain\ClassName;
 use Nidup\Architool\Domain\CodeNamespace;
 
-final class MoveLegacyClassHandler
+final class MoveLegacySpecHandler
 {
     private $extractor;
     private $renamer;
 
-    public function __construct(ClassExtractor $extractor, ClassRenamer $renamer)
+    public function __construct(ClassExtractor $extractor, SpecRenamer $renamer)
     {
         $this->extractor = $extractor;
         $this->renamer = $renamer;
     }
 
-    public function handle(MoveLegacyClass $command): void
+    public function handle(MoveLegacySpec $command): void
     {
         $from = new CodeNamespace($command->getLegacyNamespace());
         $to = new CodeNamespace($command->getDestinationNamespace());

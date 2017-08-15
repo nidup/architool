@@ -24,6 +24,7 @@ class CommunityProject implements Project
         return [
             new MoveAkeneoCommon(),
             new CreateProductEnrichment(),
+            new ProductStructureStep(),
             new CreateUserManagement()
         ];
     }
