@@ -43,11 +43,11 @@ class ProductStructureStep implements Step
                 'Akeneo/Pim/ProductEnrichment/Domain/spec',
                 'Akeneo/Pim/ProductStructure/Domain/spec',
                 'AttributeTypeRegistrySpec',
-                'Extract attribute types spec'
+                'Extract attribute types'
             ),
             new ConfigureSpecNamespace(
                 'Akeneo/Pim/ProductStructure/Domain',
-                'Configure product structure specs'
+                'Configure Domain specs'
             ),
 
             // Product Structure Domain: attribute
@@ -55,77 +55,64 @@ class ProductStructureStep implements Step
                 'Akeneo/Pim/ProductEnrichment/Domain/Model',
                 'Akeneo/Pim/ProductStructure/Domain/Model',
                 'AttributeInterface',
-                'Extract attribute in product structure'
+                'Extract attribute'
             ),
             new MoveLegacyClass(
                 'Akeneo/Pim/ProductEnrichment/Domain/Model',
                 'Akeneo/Pim/ProductStructure/Domain/Model',
                 'AttributeGroupInterface',
-                'Extract attribute in product structure'
+                'Extract attribute'
             ),
             new MoveLegacyClass(
                 'Akeneo/Pim/ProductEnrichment/Domain/Model',
                 'Akeneo/Pim/ProductStructure/Domain/Model',
                 'AttributeGroupTranslationInterface',
-                'Extract attribute in product structure'
+                'Extract attribute'
             ),
             new MoveLegacyClass(
                 'Akeneo/Pim/ProductEnrichment/Domain/Model',
                 'Akeneo/Pim/ProductStructure/Domain/Model',
                 'AbstractAttribute',
-                'Extract attribute in product structure'
+                'Extract attribute'
             ),
             new MoveLegacyClass(
                 'Akeneo/Pim/ProductEnrichment/Domain/Model',
                 'Akeneo/Pim/ProductStructure/Domain/Model',
                 'AttributeOptionInterface',
-                'Extract attribute option in product structure'
+                'Extract attribute option'
             ),
             new MoveLegacyClass(
                 'Akeneo/Pim/ProductEnrichment/Domain/Model',
                 'Akeneo/Pim/ProductStructure/Domain/Model',
                 'AttributeOptionValueInterface',
-                'Extract attribute option in product structure'
+                'Extract attribute option'
             ),
             new MoveLegacyClass(
                 'Akeneo/Pim/ProductEnrichment/Domain/Model',
                 'Akeneo/Pim/ProductStructure/Domain/Model',
                 'AttributeRequirementInterface',
-                'Extract attribute in product structure'
+                'Extract attribute requirements'
             ),
             new MoveLegacyClass(
                 'Akeneo/Pim/ProductEnrichment/Domain/Model',
                 'Akeneo/Pim/ProductStructure/Domain/Model',
                 'AttributeTranslationInterface',
-                'Extract attribute in product structure'
+                'Extract attribute'
             ),
             new MoveLegacyClass(
                 'Akeneo/Pim/ProductEnrichment/Domain/Model',
                 'Akeneo/Pim/ProductStructure/Domain/Model',
                 'FamilyInterface',
-                'Extract family in product structure'
+                'Extract family'
             ),
             new MoveLegacyClass(
                 'Akeneo/Pim/ProductEnrichment/Domain/Model',
                 'Akeneo/Pim/ProductStructure/Domain/Model',
                 'FamilyTranslationInterface',
-                'Extract family in product structure'
+                'Extract family'
             ),
 
                 /*
-        new MoveLegacyClass(
-            'Akeneo/Pim/ProductEnrichment/Domain/Model',
-            'Akeneo/Pim/ProductStructure/Domain/Model',
-            'CompletenessInterface',
-            'Extract completeness in product structure'
-        ),
-        new MoveLegacyClass(
-            'Akeneo/Pim/ProductEnrichment/Domain/Model',
-            'Akeneo/Pim/ProductStructure/Domain/Model',
-            'Completeness',
-            'Extract completeness in product structure'
-        ),
-
 
         new MoveLegacyNamespace(
             'Pim/Bundle/CatalogBundle/AttributeType',

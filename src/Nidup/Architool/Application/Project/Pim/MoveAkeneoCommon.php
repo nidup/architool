@@ -26,7 +26,7 @@ class MoveAkeneoCommon implements Step
             new ReconfigureSpecNamespace(
                 'Akeneo/Component',
                 'Akeneo/Common/Component',
-                'Configure Akeneo common specs'
+                'Move Akeneo common components'
             ),
 
             new MoveLegacyNamespace(
@@ -37,7 +37,7 @@ class MoveAkeneoCommon implements Step
             new ReconfigureSpecNamespace(
                 'Akeneo/Bundle',
                 'Akeneo/Common/Bundle',
-                'Configure Akeneo common specs'
+                'Move Akeneo common bundles'
             ),
         ];
 
