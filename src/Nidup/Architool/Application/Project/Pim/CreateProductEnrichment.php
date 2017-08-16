@@ -39,6 +39,18 @@ class CreateProductEnrichment implements Step
                 "/../../../../../../../../features/Context/fixtures/akeneo.jpg",
                 'Fix relative path use in MediaAttributeSetterSpec'
             ),
+            /*
+             * Needs to register through a ResolveDoctrineTargetModelPass
+            new MoveLegacyNamespace(
+                'Pim/Bundle/CatalogBundle/Entity',
+                'Akeneo/Pim/ProductEnrichment/Domain/Entity',
+                'Extract anemic models'
+            ),
+            new MoveLegacyNamespace(
+                'Pim/Bundle/CatalogBundle/spec/Entity',
+                'Akeneo/Pim/ProductEnrichment/Domain/spec/Entity',
+                'Extract anemic models'
+            ),*/
 
             // Infrastructure ElasticSearch
             new MoveLegacyNamespace(
