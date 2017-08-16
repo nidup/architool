@@ -43,40 +43,68 @@ class CreateProductEnrichment implements Step
             // Infrastructure ElasticSearch
             new MoveLegacyNamespace(
                 'Pim/Bundle/CatalogBundle/Elasticsearch',
-                'Akeneo/Pim/ProductEnrichment/Infrastructure/Elasticsearch',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Elasticsearch/Core',
                 'Extract ElasticSearch infrastructure'
             ),
             new MoveLegacyNamespace(
                 'Pim/Bundle/CatalogBundle/spec/Elasticsearch',
-                'Akeneo/Pim/ProductEnrichment/Infrastructure/Elasticsearch/spec',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Elasticsearch/Core/spec',
                 'Extract ElasticSearch infrastructure'
             ),
             new ConfigureSpecNamespace(
-                'Akeneo/Pim/ProductEnrichment/Infrastructure/Elasticsearch',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Elasticsearch/Core',
                 'Extract ElasticSearch infrastructure'
             ),
 
             // Infrastructure Doctrine
             new MoveLegacyNamespace(
                 'Pim/Bundle/CatalogBundle/Doctrine',
-                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/Core',
                 'Extract Doctrine infrastructure'
             ),
             new MoveLegacyNamespace(
                 'Pim/Bundle/CatalogBundle/spec/Doctrine',
-                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/spec',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/Core/spec',
                 'Extract Doctrine infrastructure'
             ),
             new ConfigureSpecNamespace(
-                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/Core',
                 'Extract Doctrine infrastructure'
             ),
             new ReplaceCodeInClass(
-                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/spec/Common/Saver/',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/Core/spec/Common/Saver/',
                 'ProductUniqueDataSynchronizerSpec',
                 "namespace spec\\\\Pim\\\\Bundle\\\\CatalogBundle\\\\Saver\\\\Common",
-                "namespace spec\Akeneo\Pim\ProductEnrichment\Infrastructure\Doctrine\Common\Saver",
+                "namespace spec\Akeneo\Pim\ProductEnrichment\Infrastructure\Doctrine\Core\Common\Saver",
                 'Fix namespace of ProductUniqueDataSynchronizerSpec misplaced on master'
+            ),
+
+            // Infrastructure Symfony
+            new MoveLegacyNamespace(
+                'Pim/Bundle/CatalogBundle',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/Core',
+                'Extract Symfony infrastructure'
+            ),
+            new ReconfigureSpecNamespace(
+                'Pim/Bundle/CatalogBundle',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/Core',
+                'Extract Symfony infrastructure'
+            ),
+
+            // Infrastructure Cli
+            new MoveLegacyNamespace(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/Core/Command',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Cli/Core/Command',
+                'Extract Cli infrastructure'
+            ),
+            new MoveLegacyNamespace(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/Core/spec/Command',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Cli/Core/spec/Command',
+                'Extract Cli infrastructure'
+            ),
+            new ConfigureSpecNamespace(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Cli/Core',
+                'Extract Cli infrastructure'
             ),
 
             // API Application

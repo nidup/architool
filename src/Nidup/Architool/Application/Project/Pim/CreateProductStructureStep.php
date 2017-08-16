@@ -8,7 +8,7 @@ use Nidup\Architool\Application\Refactoring\MoveLegacyClass;
 use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
 use Nidup\Architool\Application\Refactoring\MoveLegacySpec;
 
-class ProductStructureStep implements Step
+class CreateProductStructureStep implements Step
 {
 
     public function getDescription(): string
@@ -48,6 +48,16 @@ class ProductStructureStep implements Step
             new ConfigureSpecNamespace(
                 'Akeneo/Pim/ProductStructure/Domain',
                 'Configure Domain specs'
+            ),
+            new MoveLegacyNamespace(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/Core/AttributeType',
+                'Akeneo/Pim/ProductStructure/Domain/AttributeType',
+                'Extract product attribute types'
+            ),
+            new MoveLegacyNamespace(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/Core/spec/AttributeType',
+                'Akeneo/Pim/ProductStructure/Domain/spec/AttributeType',
+                'Extract product attribute types'
             ),
 
             // Product Structure Domain: attribute
@@ -111,36 +121,6 @@ class ProductStructureStep implements Step
                 'FamilyTranslationInterface',
                 'Extract family'
             ),
-
-                /*
-
-        new MoveLegacyNamespace(
-            'Pim/Bundle/CatalogBundle/AttributeType',
-            'Pim/ProductStructure/Domain/AttributeType',
-            'Extract product attribute types'
-        ),
-
-
-        new MoveLegacyClass(
-            'Akeneo/Pim/ProductEnrichment/Domain/Model',
-            'Pim/CatalogStructure/Domain/Model',
-            'ChannelInterface',
-            'Extract channel in catalog structure'
-        ),
-        new MoveLegacyClass(
-            'Akeneo/Pim/ProductEnrichment/Domain/Model',
-            'Pim/CatalogStructure/Domain/Model',
-            'ChannelTranslationInterface',
-            'Extract channel in catalog structure'
-        ),
-        new MoveLegacyClass(
-            'Akeneo/Pim/ProductEnrichment/Domain/Model',
-            'Pim/CatalogStructure/Domain/Model',
-            'LocaleInterface',
-            'Extract Locale in catalog structure'
-        ),
-*/
-
         ];
 
         return $commands;

@@ -44,8 +44,7 @@ final class FsSpecNamespaceConfigurator implements SpecNamespaceConfigurator
     {
         $namespace = ''.str_replace('/', "\\", $newNamespace->getName());
         $namespacePath = 'src/'.$newNamespace->getName();
-        $nameTokens = explode('/', $newNamespace->getName());
-        $configName = end($nameTokens);
+        $configName = str_replace('/', '', $newNamespace->getName());
 
         $newConfiguration = sprintf(
             "\n    %s:\n        namespace: %s\n        psr4_prefix: %s\n        spec_path: %s\n        src_path: %s",

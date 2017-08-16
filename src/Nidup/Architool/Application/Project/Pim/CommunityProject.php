@@ -10,9 +10,9 @@ class CommunityProject implements Project
     public function createBoundedContextsCommand() : CreateBoundedContexts
     {
         $contextNames = [
-            'Akeneo/Pim/CatalogSetup',
-            'Akeneo/Pim/ProductStructure',
             'Akeneo/Pim/ProductEnrichment',
+            'Akeneo/Pim/ProductStructure',
+            'Akeneo/Pim/CatalogSetup',
             'Akeneo/Pim/UserManagement',
         ];
 
@@ -24,9 +24,8 @@ class CommunityProject implements Project
         return [
             new MoveAkeneoCommon(),
             new CreateProductEnrichment(),
-            new ProductStructureStep(),
+            new CreateProductStructureStep(),
             new CreateUserManagement()
         ];
     }
-
 }
