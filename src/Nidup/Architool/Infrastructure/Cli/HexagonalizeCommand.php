@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nidup\Architool\Infrastructure\Cli;
 
 use Nidup\Architool\Application\BoundedContext\CreateBoundedContextsHandler;

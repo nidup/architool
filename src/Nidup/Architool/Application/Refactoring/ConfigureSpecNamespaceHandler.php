@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nidup\Architool\Application\Refactoring;
 
 use Nidup\Architool\Domain\CodeNamespace;

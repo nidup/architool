@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nidup\Architool\Application\Project\Pim;
 
 use Nidup\Architool\Application\BoundedContext\CreateBoundedContexts;

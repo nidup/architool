@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
 use Nidup\Architool\Application\Refactoring\ClassRenamer;
