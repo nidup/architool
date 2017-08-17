@@ -8,7 +8,7 @@ use Nidup\Architool\Application\Project\Step;
 use Nidup\Architool\Application\Refactor\MoveLegacyClassFile;
 use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespace;
 use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
-use Nidup\Architool\Application\Refactoring\MoveLegacySpec;
+use Nidup\Architool\Application\Refactor\MoveLegacySpecFile;
 
 class CreateProductStructureStep implements Step
 {
@@ -41,7 +41,7 @@ class CreateProductStructureStep implements Step
                 'AttributeTypeRegistry',
                 'Extract attribute types'
             ),
-            new MoveLegacySpec(
+            new MoveLegacySpecFile(
                 'Akeneo/Pim/ProductEnrichment/Domain/spec',
                 'Akeneo/Pim/ProductStructure/Domain/spec',
                 'AttributeTypeRegistrySpec',

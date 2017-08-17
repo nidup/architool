@@ -9,8 +9,8 @@ use Nidup\Architool\Application\Refactor\MoveLegacyClassFile;
 use Nidup\Architool\Application\Refactor\MoveLegacyClassFileHandler;
 use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespace;
 use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespaceHandler;
-use Nidup\Architool\Application\Refactoring\MoveLegacySpec;
-use Nidup\Architool\Application\Refactoring\MoveLegacySpecHandler;
+use Nidup\Architool\Application\Refactor\MoveLegacySpecFile;
+use Nidup\Architool\Application\Refactor\MoveLegacySpecFileHandler;
 use Nidup\Architool\Application\Refactoring\ReconfigureSpecNamespace;
 use Nidup\Architool\Application\Refactoring\ReconfigureSpecNamespaceHandler;
 use Nidup\Architool\Application\Refactoring\ReplaceCodeInClass;
@@ -18,14 +18,15 @@ use Nidup\Architool\Application\Refactoring\ReplaceCodeInClassHandler;
 use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
 use Nidup\Architool\Application\Refactoring\MoveLegacyNamespaceHandler;
 use Nidup\Architool\Domain\ClassFileRepository;
-use Nidup\Architool\Infrastructure\Filesystem\FsClassExtractor;
+use Nidup\Architool\Domain\SpecFileRepository;
 use Nidup\Architool\Infrastructure\Filesystem\FsClassFileMover;
 use Nidup\Architool\Infrastructure\Filesystem\FsClassFileReferenceUpdater;
 use Nidup\Architool\Infrastructure\Filesystem\FsCodeReplacer;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceExtractor;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceRenamer;
+use Nidup\Architool\Infrastructure\Filesystem\FsSpecFileMover;
+use Nidup\Architool\Infrastructure\Filesystem\FsSpecFileReferenceUpdater;
 use Nidup\Architool\Infrastructure\Filesystem\FsSpecNamespaceConfigurator;
-use Nidup\Architool\Infrastructure\Filesystem\FsSpecRenamer;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class StepCommandsHandler
@@ -48,9 +49,8 @@ class StepCommandsHandler
         $repo = new ClassFileRepository(new FsClassFileMover($path), new FsClassFileReferenceUpdater($path));
         $classFileHandler = new MoveLegacyClassFileHandler($repo);
 
-        $mover = new FsClassExtractor($path);
-        $renamer = new FsSpecRenamer($path);
-        $specHandler = new MoveLegacySpecHandler($mover, $renamer);
+        $repo = new SpecFileRepository(new FsSpecFileMover($path), new FsSpecFileReferenceUpdater($path));
+        $specHandler = new MoveLegacySpecFileHandler($repo);
 
         $configurator = new FsSpecNamespaceConfigurator($path);
         $specReconfigHandler = new ReconfigureSpecNamespaceHandler($configurator);
@@ -81,7 +81,7 @@ class StepCommandsHandler
                         $command->getDescription()
                     )
                 );
-            } else if ($command instanceof MoveLegacySpec) {
+            } else if ($command instanceof MoveLegacySpecFile) {
                 $specHandler->handle($command);
                 $output->writeln(
                     sprintf(

@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Application\Refactoring\SpecRenamer;
-use Nidup\Architool\Domain\Model\ClassFile\ClassName;
-use Nidup\Architool\Domain\CodeNamespace;
+use Nidup\Architool\Domain\Model\SpecFile;
+use Nidup\Architool\Domain\Model\SpecFile\SpecNamespace;
+use Nidup\Architool\Domain\Model\SpecFile\SpecName;
+use Nidup\Architool\Domain\SpecFileReferenceUpdater;
 use Symfony\Component\Finder\Finder;
 
-final class FsSpecRenamer implements SpecRenamer
+final class FsSpecFileReferenceUpdater implements SpecFileReferenceUpdater
 {
     private $projectPath;
     private $fileUpdater;
@@ -20,12 +21,16 @@ final class FsSpecRenamer implements SpecRenamer
         $this->fileUpdater = new FsFileUpdater();
     }
 
-    public function rename(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
+    public function update(SpecFile $spec)
     {
+        $source = $spec->getOriginalNamespace();
+        $destination = $spec->getNewNamespace();
+        $className = $spec->getName();
+
         $this->changeDeclaration($source, $destination, $className);
     }
 
-    private function changeDeclaration(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
+    private function changeDeclaration(SpecNamespace $source, SpecNamespace $destination, SpecName $className)
     {
         $srcPath = $this->projectPath.DIRECTORY_SEPARATOR.'src';
         $destinationPath = $srcPath.DIRECTORY_SEPARATOR.$destination->getName();
