@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Application\Refactoring\ClassRenamer;
-use Nidup\Architool\Domain\ClassName;
-use Nidup\Architool\Domain\CodeNamespace;
+use Nidup\Architool\Domain\ClassFileReferenceUpdater;
+use Nidup\Architool\Domain\Model\ClassFile;
+use Nidup\Architool\Domain\Model\ClassFile\ClassNamespace;
+use Nidup\Architool\Domain\Model\ClassFile\ClassName;
 use Symfony\Component\Finder\Finder;
 
-final class FsClassRenamer implements ClassRenamer
+final class FsClassFileReferenceUpdater implements ClassFileReferenceUpdater
 {
     private $projectPath;
     private $fileUpdater;
@@ -20,8 +21,12 @@ final class FsClassRenamer implements ClassRenamer
         $this->fileUpdater = new FsFileUpdater();
     }
 
-    public function rename(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
+    public function update(ClassFile $class)
     {
+        $source = $class->getOriginalNamespace();
+        $destination = $class->getNewNamespace();
+        $className = $class->getName();
+
         $this->changeDeclaration($source, $destination, $className);
         $this->changeClassesReferences($source, $destination, $className);
         $this->changeServicesReferences($source, $destination, $className);
@@ -31,7 +36,7 @@ final class FsClassRenamer implements ClassRenamer
         $this->changeAppConfiguration($source, $destination, $className);
     }
 
-    private function changeDeclaration(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
+    private function changeDeclaration(ClassNamespace $source, ClassNamespace $destination, ClassName $className)
     {
         $srcPath = $this->projectPath.DIRECTORY_SEPARATOR.'src';
         $destinationPath = $srcPath.DIRECTORY_SEPARATOR.$destination->getName();
@@ -48,7 +53,7 @@ final class FsClassRenamer implements ClassRenamer
         }
     }
 
-    private function changeClassesReferences(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
+    private function changeClassesReferences(ClassNamespace $source, ClassNamespace $destination, ClassName $className)
     {
         $finder = new Finder();
 
@@ -68,7 +73,7 @@ final class FsClassRenamer implements ClassRenamer
         }
     }
 
-    private function addMissingClassReferencesToExNeighbourClasses(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
+    private function addMissingClassReferencesToExNeighbourClasses(ClassNamespace $source, ClassNamespace $destination, ClassName $className)
     {
         $finder = new Finder();
 
@@ -90,7 +95,7 @@ final class FsClassRenamer implements ClassRenamer
         }
     }
 
-    private function addMissingExNeighboursReferencesToTheClass(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
+    private function addMissingExNeighboursReferencesToTheClass(ClassNamespace $source, ClassNamespace $destination, ClassName $className)
     {
         $srcPath = $this->projectPath.DIRECTORY_SEPARATOR.'src';
         $newClassPath = $srcPath.DIRECTORY_SEPARATOR.$destination->getName();
@@ -134,7 +139,7 @@ final class FsClassRenamer implements ClassRenamer
         }
     }
 
-    private function changeServicesReferences(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
+    private function changeServicesReferences(ClassNamespace $source, ClassNamespace $destination, ClassName $className)
     {
         $finder = new Finder();
 
@@ -152,7 +157,7 @@ final class FsClassRenamer implements ClassRenamer
         }
     }
 
-    private function changeAppKernelBundles(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
+    private function changeAppKernelBundles(ClassNamespace $source, ClassNamespace $destination, ClassName $className)
     {
         $finder = new Finder();
 
@@ -170,7 +175,7 @@ final class FsClassRenamer implements ClassRenamer
         }
     }
 
-    private function changeAppConfiguration(CodeNamespace $source, CodeNamespace $destination, ClassName $className)
+    private function changeAppConfiguration(ClassNamespace $source, ClassNamespace $destination, ClassName $className)
     {
         $finder = new Finder();
 

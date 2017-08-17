@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Nidup\Architool\Application\Refactoring;
+namespace Nidup\Architool\Application\Refactor;
 
-final class MoveLegacyClass
+class MoveLegacyClassFile
 {
     private $legacyNamespace;
     private $destinationNamespace;

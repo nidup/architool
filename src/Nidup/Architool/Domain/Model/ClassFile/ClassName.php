@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Nidup\Architool\Domain;
+namespace Nidup\Architool\Domain\Model\ClassFile;
 
-final class ClassName
+class ClassName
 {
     private $name;
 

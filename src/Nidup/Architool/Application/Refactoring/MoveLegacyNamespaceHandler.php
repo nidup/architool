@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Application\Refactoring;
 
-use Nidup\Architool\Application\Refactoring\NamespaceExtractor;
-use Nidup\Architool\Application\Refactoring\NamespaceRenamer;
-use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
 use Nidup\Architool\Domain\CodeNamespace;
 
 final class MoveLegacyNamespaceHandler

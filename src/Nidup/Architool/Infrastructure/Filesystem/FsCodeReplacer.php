@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
 use Nidup\Architool\Application\Refactoring\CodeReplacer;
-use Nidup\Architool\Domain\ClassName;
+use Nidup\Architool\Domain\Model\ClassFile\ClassName;
 use Nidup\Architool\Domain\CodeFragment;
 use Nidup\Architool\Domain\CodeNamespace;
 use Symfony\Component\Finder\Finder;

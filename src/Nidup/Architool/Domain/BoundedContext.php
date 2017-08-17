@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Domain;
 
+use Nidup\Architool\Domain\BoundedContext\Layer;
+
 class BoundedContext
 {
     private $name;

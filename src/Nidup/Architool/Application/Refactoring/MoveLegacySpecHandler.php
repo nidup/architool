@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Application\Refactoring;
 
-use Nidup\Architool\Domain\ClassName;
+use Nidup\Architool\Domain\Model\ClassFile\ClassName;
 use Nidup\Architool\Domain\CodeNamespace;
 
 final class MoveLegacySpecHandler

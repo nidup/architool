@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Nidup\Architool\Application\Project\Pim;
 
 use Nidup\Architool\Application\Project\Step;
-use Nidup\Architool\Application\Refactoring\ReconfigureSpecNamespace;
-use Nidup\Architool\Application\Refactoring\MoveLegacyClass;
 use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
 
 class CreateUserManagement implements Step

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Nidup\Architool\Infrastructure\Cli;
 
 use Nidup\Architool\Application\Project\Step;
+use Nidup\Architool\Application\Refactor\MoveLegacyClassFile;
+use Nidup\Architool\Application\Refactor\MoveLegacyClassFileHandler;
 use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespace;
 use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespaceHandler;
 use Nidup\Architool\Application\Refactoring\MoveLegacySpec;
@@ -13,12 +15,12 @@ use Nidup\Architool\Application\Refactoring\ReconfigureSpecNamespace;
 use Nidup\Architool\Application\Refactoring\ReconfigureSpecNamespaceHandler;
 use Nidup\Architool\Application\Refactoring\ReplaceCodeInClass;
 use Nidup\Architool\Application\Refactoring\ReplaceCodeInClassHandler;
-use Nidup\Architool\Application\Refactoring\MoveLegacyClass;
-use Nidup\Architool\Application\Refactoring\MoveLegacyClassHandler;
 use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
 use Nidup\Architool\Application\Refactoring\MoveLegacyNamespaceHandler;
+use Nidup\Architool\Domain\ClassFileRepository;
 use Nidup\Architool\Infrastructure\Filesystem\FsClassExtractor;
-use Nidup\Architool\Infrastructure\Filesystem\FsClassRenamer;
+use Nidup\Architool\Infrastructure\Filesystem\FsClassFileMover;
+use Nidup\Architool\Infrastructure\Filesystem\FsClassFileReferenceUpdater;
 use Nidup\Architool\Infrastructure\Filesystem\FsCodeReplacer;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceExtractor;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceRenamer;
@@ -43,9 +45,8 @@ class StepCommandsHandler
         $renamer = new FsNamespaceRenamer($path);
         $namespaceHandler = new MoveLegacyNamespaceHandler($mover, $renamer);
 
-        $mover = new FsClassExtractor($path);
-        $renamer = new FsClassRenamer($path);
-        $classHandler = new MoveLegacyClassHandler($mover, $renamer);
+        $repo = new ClassFileRepository(new FsClassFileMover($path), new FsClassFileReferenceUpdater($path));
+        $classFileHandler = new MoveLegacyClassFileHandler($repo);
 
         $mover = new FsClassExtractor($path);
         $renamer = new FsSpecRenamer($path);
@@ -70,8 +71,8 @@ class StepCommandsHandler
                     )
                 );
 
-            } else if ($command instanceof MoveLegacyClass) {
-                $classHandler->handle($command);
+            } else if ($command instanceof MoveLegacyClassFile) {
+                $classFileHandler->handle($command);
                 $output->writeln(
                     sprintf(
                         ' - Extract class "%s" to "%s" in order to "%s"',
@@ -119,7 +120,7 @@ class StepCommandsHandler
                     )
                 );
             } else {
-                throw new \Exception(printf("Unknown command %s", get_class($command)));
+                throw new \Exception(sprintf("Unknown command %s", get_class($command)));
             }
         }
         $output->writeln("");
