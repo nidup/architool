@@ -1,11 +1,12 @@
 {
     "require": {
+        "php": "^7.1",
         "symfony/console": "3.3.*",
         "symfony/finder": "3.3.*",
         "symfony/filesystem": "3.3.*"
     },
     "require-dev": {
-        "php": "^7.1"
+        "phpspec/phpspec": "4.0.*"
     },
     "license": "MIT",
     "authors": [
@@ -14,6 +15,9 @@
             "email": "nicolas@akeneo.com"
         }
     ],
+    "config": {
+        "bin-dir": "bin"
+    },
     "autoload": {
         "psr-4": {
             "": "src/"
