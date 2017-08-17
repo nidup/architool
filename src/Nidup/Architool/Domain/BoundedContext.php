@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Domain;
 
-final class BoundedContext
+class BoundedContext
 {
     private $name;
 

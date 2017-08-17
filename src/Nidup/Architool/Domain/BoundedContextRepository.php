@@ -6,5 +6,5 @@ namespace Nidup\Architool\Domain;
 
 interface BoundedContextRepository
 {
-    public function create(BoundedContext $context);
+    public function add(BoundedContext $context);
 }

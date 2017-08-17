@@ -20,7 +20,7 @@ final class CreateBoundedContextsHandler
     public function handle(CreateBoundedContexts $command): void
     {
         foreach ($command->getNames() as $name) {
-            $this->repository->create(new BoundedContext($name));
+            $this->repository->add(new BoundedContext($name));
         }
     }
 }

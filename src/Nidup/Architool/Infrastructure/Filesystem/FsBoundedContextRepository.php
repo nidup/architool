@@ -6,6 +6,7 @@ namespace Nidup\Architool\Infrastructure\Filesystem;
 
 use Nidup\Architool\Domain\BoundedContext;
 use Nidup\Architool\Domain\BoundedContextRepository;
+use phpDocumentor\Reflection\File;
 use Symfony\Component\Filesystem\Filesystem;
 
 final class FsBoundedContextRepository implements BoundedContextRepository
@@ -13,13 +14,13 @@ final class FsBoundedContextRepository implements BoundedContextRepository
     private $srcPath;
     private $filesystem;
 
-    public function __construct(string $srcPath)
+    public function __construct(Filesystem $filesystem, string $srcPath)
     {
         $this->srcPath = $srcPath;
-        $this->filesystem = new Filesystem();
+        $this->filesystem = $filesystem;
     }
 
-    public function create(BoundedContext $context)
+    public function add(BoundedContext $context)
     {
         $contextDir = $this->srcPath.DIRECTORY_SEPARATOR.$context->getName();
         $this->filesystem->mkdir($contextDir);

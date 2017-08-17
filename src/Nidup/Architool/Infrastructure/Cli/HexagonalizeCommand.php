@@ -18,6 +18,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 class HexagonalizeCommand extends Command
 {
@@ -57,7 +58,7 @@ class HexagonalizeCommand extends Command
     private function createBoundedContexts(string $path, OutputInterface $output, Project $project)
     {
         $command = $project->createBoundedContextsCommand();
-        $repository = new FsBoundedContextRepository($path);
+        $repository = new FsBoundedContextRepository(new Filesystem(), $path);
         $handler = new CreateBoundedContextsHandler($repository);
         $handler->handle($command);
         $output->writeln(sprintf("[x] Create bounded contexts %s\n", implode(', ', $command->getNames())));
