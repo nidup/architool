@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nidup\Architool\Application\BoundedContext;
+namespace Nidup\Architool\Application\Refactor;
 
 class CreateBoundedContexts
 {

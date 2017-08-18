@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Cli;
 
-use Nidup\Architool\Application\BoundedContext\CreateBoundedContextsHandler;
+use Nidup\Architool\Application\Refactor\CreateBoundedContextsHandler;
 use Nidup\Architool\Application\Project\Pim\CommunityProject;
 use Nidup\Architool\Application\Workspace\FinalizeWorkspace;
 use Nidup\Architool\Application\Workspace\FinalizeWorkspaceHandler;

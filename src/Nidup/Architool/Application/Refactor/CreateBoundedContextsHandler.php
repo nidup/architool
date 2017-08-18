@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Nidup\Architool\Application\BoundedContext;
+namespace Nidup\Architool\Application\Refactor;
 
-use Nidup\Architool\Application\BoundedContext\CreateBoundedContexts;
+use Nidup\Architool\Application\Refactor\CreateBoundedContexts;
 use Nidup\Architool\Domain\Model\BoundedContext;
 use Nidup\Architool\Domain\BoundedContextRepository;
 
