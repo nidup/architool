@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Domain;
 
+use Nidup\Architool\Domain\Model\BoundedContext;
+
 interface BoundedContextRepository
 {
-    public function create(BoundedContext $context);
+    public function add(BoundedContext $context);
 }

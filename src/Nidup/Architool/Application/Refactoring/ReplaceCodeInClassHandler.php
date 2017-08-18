@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Application\Refactoring;
 
-use Nidup\Architool\Domain\ClassName;
 use Nidup\Architool\Domain\CodeFragment;
 use Nidup\Architool\Domain\CodeNamespace;
+use Nidup\Architool\Domain\Model\File\Name;
 
 final class ReplaceCodeInClassHandler
 {
@@ -20,7 +20,7 @@ final class ReplaceCodeInClassHandler
     public function handle(ReplaceCodeInClass $command): void
     {
         $namespace = new CodeNamespace($command->getNamespace());
-        $class = new ClassName($command->getClassName());
+        $class = new Name($command->getClassName());
         $legacyCode = new CodeFragment($command->getLegacyCode());
         $replacementCode = new CodeFragment($command->getReplacementCode());
         $this->replacer->replace($namespace, $class, $legacyCode, $replacementCode);

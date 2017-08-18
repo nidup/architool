@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
 use Nidup\Architool\Application\Refactoring\CodeReplacer;
-use Nidup\Architool\Domain\ClassName;
 use Nidup\Architool\Domain\CodeFragment;
 use Nidup\Architool\Domain\CodeNamespace;
+use Nidup\Architool\Domain\Model\File\Name;
 use Symfony\Component\Finder\Finder;
 
 class FsCodeReplacer implements CodeReplacer
@@ -18,12 +18,12 @@ class FsCodeReplacer implements CodeReplacer
     public function __construct(string $projectPath)
     {
         $this->projectPath = $projectPath;
-        $this->fileUpdater = new FsFileUpdater();
+        $this->fileUpdater = new FileUpdater();
     }
 
     public function replace(
         CodeNamespace $namespace,
-        ClassName $class,
+        Name $class,
         CodeFragment $legacyCode,
         CodeFragment $replacementCode
     ) {
@@ -33,7 +33,7 @@ class FsCodeReplacer implements CodeReplacer
         $finder = new Finder();
         $finder->files()
             ->in($classPath)
-            ->name($class->getName().'.php');
+            ->name($class->getValue().'.php');
 
         $replacementPattern = $legacyCode->getContent();
         $replacementPattern = str_replace('/', "\/", $replacementPattern);
