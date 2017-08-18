@@ -3,7 +3,7 @@
 namespace spec\Nidup\Architool\Application\BoundedContext;
 
 use Nidup\Architool\Application\BoundedContext\CreateBoundedContexts;
-use Nidup\Architool\Domain\BoundedContext;
+use Nidup\Architool\Domain\Model\BoundedContext;
 use Nidup\Architool\Domain\BoundedContextRepository;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

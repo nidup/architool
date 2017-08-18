@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Domain\BoundedContext;
+use Nidup\Architool\Domain\Model\BoundedContext;
 use Nidup\Architool\Domain\BoundedContextRepository;
 use phpDocumentor\Reflection\File;
 use Symfony\Component\Filesystem\Filesystem;

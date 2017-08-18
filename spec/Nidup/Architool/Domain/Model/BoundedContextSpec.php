@@ -1,8 +1,7 @@
 <?php
 
-namespace spec\Nidup\Architool\Domain;
+namespace spec\Nidup\Architool\Domain\Model;
 
-use Nidup\Architool\Domain\BoundedContext;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

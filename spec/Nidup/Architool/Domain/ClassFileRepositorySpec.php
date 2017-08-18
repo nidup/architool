@@ -4,7 +4,6 @@ namespace spec\Nidup\Architool\Domain;
 
 use Nidup\Architool\Domain\ClassFileMover;
 use Nidup\Architool\Domain\ClassFileReferenceUpdater;
-use Nidup\Architool\Domain\ClassFileRepository;
 use Nidup\Architool\Domain\Model\ClassFile;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

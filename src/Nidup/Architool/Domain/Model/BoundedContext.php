@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Nidup\Architool\Domain;
+namespace Nidup\Architool\Domain\Model;
 
-use Nidup\Architool\Domain\BoundedContext\Layer;
+use Nidup\Architool\Domain\Model\BoundedContext\Layer;
 
 class BoundedContext
 {
