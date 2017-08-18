@@ -1,15 +1,14 @@
 <?php
 
-namespace spec\Nidup\Architool\Domain;
+namespace spec\Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Domain\SpecFileMover;
-use Nidup\Architool\Domain\SpecFileReferenceUpdater;
-use Nidup\Architool\Domain\SpecFileRepository;
 use Nidup\Architool\Domain\Model\SpecFile;
+use Nidup\Architool\Infrastructure\Filesystem\SpecFileMover;
+use Nidup\Architool\Infrastructure\Filesystem\SpecFileReferenceUpdater;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class SpecFileRepositorySpec extends ObjectBehavior
+class FsSpecFileRepositorySpec extends ObjectBehavior
 {
     function let(SpecFileMover $mover, SpecFileReferenceUpdater $updater)
     {

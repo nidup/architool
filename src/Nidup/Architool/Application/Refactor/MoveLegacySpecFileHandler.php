@@ -6,13 +6,13 @@ namespace Nidup\Architool\Application\Refactor;
 
 use Nidup\Architool\Domain\Model\SpecFile\SpecName;
 use Nidup\Architool\Domain\Model\SpecFile\SpecNamespace;
-use Nidup\Architool\Domain\SpecFileRepository;
+use Nidup\Architool\Infrastructure\Filesystem\FsSpecFileRepository;
 
 final class MoveLegacySpecFileHandler
 {
     private $repository;
 
-    public function __construct(SpecFileRepository $repository)
+    public function __construct(FsSpecFileRepository $repository)
     {
         $this->repository = $repository;
     }

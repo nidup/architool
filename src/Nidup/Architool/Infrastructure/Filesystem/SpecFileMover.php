@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
 use Nidup\Architool\Domain\Model\SpecFile;
-use Nidup\Architool\Domain\SpecFileMover;
 use Symfony\Component\Filesystem\Filesystem;
 
-final class FsSpecFileMover implements SpecFileMover
+class SpecFileMover
 {
     private $projectPath;
     private $filesystem;

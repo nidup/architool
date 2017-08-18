@@ -7,10 +7,9 @@ namespace Nidup\Architool\Infrastructure\Filesystem;
 use Nidup\Architool\Domain\Model\SpecFile;
 use Nidup\Architool\Domain\Model\SpecFile\SpecNamespace;
 use Nidup\Architool\Domain\Model\SpecFile\SpecName;
-use Nidup\Architool\Domain\SpecFileReferenceUpdater;
 use Symfony\Component\Finder\Finder;
 
-final class FsSpecFileReferenceUpdater implements SpecFileReferenceUpdater
+class SpecFileReferenceUpdater
 {
     private $projectPath;
     private $fileUpdater;

@@ -18,14 +18,14 @@ use Nidup\Architool\Application\Refactoring\ReplaceCodeInClassHandler;
 use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
 use Nidup\Architool\Application\Refactoring\MoveLegacyNamespaceHandler;
 use Nidup\Architool\Infrastructure\Filesystem\FsClassFileRepository;
-use Nidup\Architool\Domain\SpecFileRepository;
+use Nidup\Architool\Infrastructure\Filesystem\FsSpecFileRepository;
 use Nidup\Architool\Infrastructure\Filesystem\ClassFileMover;
 use Nidup\Architool\Infrastructure\Filesystem\ClassFileReferenceUpdater;
 use Nidup\Architool\Infrastructure\Filesystem\FsCodeReplacer;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceExtractor;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceRenamer;
-use Nidup\Architool\Infrastructure\Filesystem\FsSpecFileMover;
-use Nidup\Architool\Infrastructure\Filesystem\FsSpecFileReferenceUpdater;
+use Nidup\Architool\Infrastructure\Filesystem\SpecFileMover;
+use Nidup\Architool\Infrastructure\Filesystem\SpecFileReferenceUpdater;
 use Nidup\Architool\Infrastructure\Filesystem\FsSpecNamespaceConfigurator;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -49,7 +49,7 @@ class StepCommandsHandler
         $repo = new FsClassFileRepository(new ClassFileMover($path), new ClassFileReferenceUpdater($path));
         $classFileHandler = new MoveLegacyClassFileHandler($repo);
 
-        $repo = new SpecFileRepository(new FsSpecFileMover($path), new FsSpecFileReferenceUpdater($path));
+        $repo = new FsSpecFileRepository(new SpecFileMover($path), new SpecFileReferenceUpdater($path));
         $specHandler = new MoveLegacySpecFileHandler($repo);
 
         $configurator = new FsSpecNamespaceConfigurator($path);

@@ -6,13 +6,13 @@ use Nidup\Architool\Application\Refactor\MoveLegacySpecFile;
 use Nidup\Architool\Domain\Model\SpecFile;
 use Nidup\Architool\Domain\Model\SpecFile\SpecName;
 use Nidup\Architool\Domain\Model\SpecFile\SpecNamespace;
-use Nidup\Architool\Domain\SpecFileRepository;
+use Nidup\Architool\Infrastructure\Filesystem\FsSpecFileRepository;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class MoveLegacySpecFileHandlerSpec extends ObjectBehavior
 {
-    function let(SpecFileRepository $repository)
+    function let(FsSpecFileRepository $repository)
     {
         $this->beConstructedWith($repository);
     }
