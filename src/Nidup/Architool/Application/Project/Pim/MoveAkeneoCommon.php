@@ -6,7 +6,7 @@ namespace Nidup\Architool\Application\Project\Pim;
 
 use Nidup\Architool\Application\Project\Step;
 use Nidup\Architool\Application\Refactoring\ReconfigureSpecNamespace;
-use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
+use Nidup\Architool\Application\Refactor\MoveLegacyFolder;
 
 class MoveAkeneoCommon implements Step
 {
@@ -19,7 +19,7 @@ class MoveAkeneoCommon implements Step
     public function createReworkCodebaseCommands() : array
     {
         $commands = [
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Akeneo/Component',
                 'Akeneo/Common/Component',
                 'Move Akeneo common components'
@@ -30,7 +30,7 @@ class MoveAkeneoCommon implements Step
                 'Move Akeneo common components'
             ),
 
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Akeneo/Bundle',
                 'Akeneo/Common/Bundle',
                 'Move Akeneo common bundles'

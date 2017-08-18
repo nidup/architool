@@ -7,7 +7,7 @@ namespace Nidup\Architool\Application\Project\Pim;
 use Nidup\Architool\Application\Project\Step;
 use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespace;
 use Nidup\Architool\Application\Refactoring\ReconfigureSpecNamespace;
-use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
+use Nidup\Architool\Application\Refactor\MoveLegacyFolder;
 use Nidup\Architool\Application\Refactoring\ReplaceCodeInClass;
 
 class CreateProductEnrichment implements Step
@@ -23,7 +23,7 @@ class CreateProductEnrichment implements Step
         $commands = [
 
             // Domain
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Pim/Component/Catalog',
                 'Akeneo/Pim/ProductEnrichment/Domain',
                 'Move catalog component as product enrichment domain (some parts will be extracted later in product structure & catalog structure)'
@@ -54,12 +54,12 @@ class CreateProductEnrichment implements Step
             ),*/
 
             // Infrastructure ElasticSearch
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Pim/Bundle/CatalogBundle/Elasticsearch',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Elasticsearch/Core',
                 'Extract ElasticSearch infrastructure'
             ),
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Pim/Bundle/CatalogBundle/spec/Elasticsearch',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Elasticsearch/Core/spec',
                 'Extract ElasticSearch infrastructure'
@@ -70,12 +70,12 @@ class CreateProductEnrichment implements Step
             ),
 
             // Infrastructure Doctrine
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Pim/Bundle/CatalogBundle/Doctrine',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/Core',
                 'Extract Doctrine infrastructure'
             ),
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Pim/Bundle/CatalogBundle/spec/Doctrine',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/Core/spec',
                 'Extract Doctrine infrastructure'
@@ -93,7 +93,7 @@ class CreateProductEnrichment implements Step
             ),
 
             // Infrastructure Symfony
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Pim/Bundle/CatalogBundle',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/Core',
                 'Extract Symfony infrastructure'
@@ -105,12 +105,12 @@ class CreateProductEnrichment implements Step
             ),
 
             // Infrastructure Cli
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/Core/Command',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Cli/Core/Command',
                 'Extract Cli infrastructure'
             ),
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/Core/spec/Command',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Cli/Core/spec/Command',
                 'Extract Cli infrastructure'
@@ -121,7 +121,7 @@ class CreateProductEnrichment implements Step
             ),
 
             // API Application
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Pim/Component/Api',
                 'Akeneo/Pim/ProductEnrichment/Application/Api',
                 'Extract API features in application'
@@ -133,7 +133,7 @@ class CreateProductEnrichment implements Step
             ),
 
             // API Infrastructure Http Web
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Pim/Bundle/ApiBundle',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Http/Api',
                 'Extract API Http infrastructure'
@@ -144,20 +144,20 @@ class CreateProductEnrichment implements Step
                 'Extract API Http infrastructure'
             ),
             // API Infrastructure Cli
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Http/Api/Command',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Cli/Api/Command',
                 'Extract API Cli infrastructure'
             ),
             // API Infrastructure Doctrine
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Http/Api/Doctrine',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/Api',
                 'Extract API Doctrine infrastructure'
             ),
 
             // Import/Export Application
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Pim/Component/Connector',
                 'Akeneo/Pim/ProductEnrichment/Application/ImportExport',
                 'Extract Import/Export features in application'
@@ -169,7 +169,7 @@ class CreateProductEnrichment implements Step
             ),
 
             // Import/Export Infrastructure Symfony
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Pim/Bundle/ConnectorBundle',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/ImportExport',
                 'Extract Import/Export symfony infrastructure'
@@ -180,18 +180,18 @@ class CreateProductEnrichment implements Step
                 'Extract Import/Export symfony infrastructure'
             ),
             // Import/Export Infrastructure Cli
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/ImportExport/Command',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Cli/ImportExport/Command',
                 'Extract Import/Export Cli infrastructure'
             ),
             // Import/Export Infrastructure Doctrine
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/ImportExport/Doctrine',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/ImportExport',
                 'Extract Import/Export Doctrine infrastructure'
             ),
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/ImportExport/spec/Doctrine',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/ImportExport/spec',
                 'Extract Import/Export Doctrine infrastructure'
@@ -203,7 +203,7 @@ class CreateProductEnrichment implements Step
 
 
             // Edition Application
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Pim/Component/Enrich',
                 'Akeneo/Pim/ProductEnrichment/Application/Edition',
                 'Extract Edition features in application'

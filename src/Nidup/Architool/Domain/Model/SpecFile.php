@@ -57,7 +57,7 @@ class SpecFile
     }
 
     /**
-     * @return SpecName|null
+     * @return SpecNamespace|null
      */
     public function getNewNamespace()
     {

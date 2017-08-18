@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
 use Nidup\Architool\Application\Refactoring\NamespaceExtractor;
-use Nidup\Architool\Domain\CodeNamespace;
+use Nidup\Architool\Domain\Model\Folder;
 use Symfony\Component\Filesystem\Filesystem;
 
-final class FsNamespaceExtractor implements NamespaceExtractor
+class FolderMover
 {
     private $projectPath;
     private $filesystem;
@@ -19,8 +19,11 @@ final class FsNamespaceExtractor implements NamespaceExtractor
         $this->filesystem = new Filesystem();
     }
 
-    public function extract(CodeNamespace $source, CodeNamespace $destination)
+    public function move(Folder $folder)
     {
+        $source = $folder->getOriginalNamespace();
+        $destination = $folder->getNewNamespace();
+
         $srcPath = $this->projectPath.DIRECTORY_SEPARATOR.'src';
 
         $from = $srcPath.DIRECTORY_SEPARATOR.$source->getName();

@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Application\Refactoring\NamespaceExtractor;
-use Nidup\Architool\Application\Refactoring\NamespaceRenamer;
-use Nidup\Architool\Domain\CodeNamespace;
-use Symfony\Component\Filesystem\Filesystem;
+use Nidup\Architool\Domain\Model\Folder\FolderNamespace;
+use Nidup\Architool\Domain\Model\Folder;
 use Symfony\Component\Finder\Finder;
 
-final class FsNamespaceRenamer implements NamespaceRenamer
+class FolderReferenceUpdater
 {
     private $projectPath;
     private $fileUpdater;
@@ -21,8 +19,11 @@ final class FsNamespaceRenamer implements NamespaceRenamer
         $this->fileUpdater = new FsFileUpdater();
     }
 
-    public function rename(CodeNamespace $source, CodeNamespace $destination)
+    public function update(Folder $folder)
     {
+        $source = $folder->getOriginalNamespace();
+        $destination = $folder->getNewNamespace();
+
         $this->changeDeclaration($source, $destination);
         $this->changeClassesReferences($source, $destination);
         $this->changeServicesReferences($source, $destination);
@@ -30,7 +31,7 @@ final class FsNamespaceRenamer implements NamespaceRenamer
         $this->changeAppConfiguration($source, $destination);
     }
 
-    private function changeDeclaration(CodeNamespace $source, CodeNamespace $destination)
+    private function changeDeclaration(FolderNamespace $source, FolderNamespace $destination)
     {
         $srcPath = $this->projectPath.DIRECTORY_SEPARATOR.'src';
         $destinationPath = $srcPath.DIRECTORY_SEPARATOR.$destination->getName();
@@ -49,7 +50,7 @@ final class FsNamespaceRenamer implements NamespaceRenamer
         }
     }
 
-    private function changeClassesReferences(CodeNamespace $source, CodeNamespace $destination)
+    private function changeClassesReferences(FolderNamespace $source, FolderNamespace $destination)
     {
         $finder = new Finder();
 
@@ -69,7 +70,7 @@ final class FsNamespaceRenamer implements NamespaceRenamer
         }
     }
 
-    private function changeServicesReferences(CodeNamespace $source, CodeNamespace $destination)
+    private function changeServicesReferences(FolderNamespace $source, FolderNamespace $destination)
     {
         $finder = new Finder();
 
@@ -87,7 +88,7 @@ final class FsNamespaceRenamer implements NamespaceRenamer
         }
     }
 
-    private function changeAppKernelBundles(CodeNamespace $source, CodeNamespace $destination)
+    private function changeAppKernelBundles(FolderNamespace $source, FolderNamespace $destination)
     {
         $finder = new Finder();
 
@@ -106,7 +107,7 @@ final class FsNamespaceRenamer implements NamespaceRenamer
         }
     }
 
-    private function changeAppConfiguration(CodeNamespace $source, CodeNamespace $destination)
+    private function changeAppConfiguration(FolderNamespace $source, FolderNamespace $destination)
     {
         $finder = new Finder();
 

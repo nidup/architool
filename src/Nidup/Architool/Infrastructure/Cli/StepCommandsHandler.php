@@ -15,15 +15,16 @@ use Nidup\Architool\Application\Refactoring\ReconfigureSpecNamespace;
 use Nidup\Architool\Application\Refactoring\ReconfigureSpecNamespaceHandler;
 use Nidup\Architool\Application\Refactoring\ReplaceCodeInClass;
 use Nidup\Architool\Application\Refactoring\ReplaceCodeInClassHandler;
-use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
-use Nidup\Architool\Application\Refactoring\MoveLegacyNamespaceHandler;
+use Nidup\Architool\Application\Refactor\MoveLegacyFolder;
+use Nidup\Architool\Application\Refactor\MoveLegacyFolderHandler;
 use Nidup\Architool\Infrastructure\Filesystem\FsClassFileRepository;
+use Nidup\Architool\Infrastructure\Filesystem\FsFolderRepository;
 use Nidup\Architool\Infrastructure\Filesystem\FsSpecFileRepository;
 use Nidup\Architool\Infrastructure\Filesystem\ClassFileMover;
 use Nidup\Architool\Infrastructure\Filesystem\ClassFileReferenceUpdater;
 use Nidup\Architool\Infrastructure\Filesystem\FsCodeReplacer;
-use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceExtractor;
-use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceRenamer;
+use Nidup\Architool\Infrastructure\Filesystem\FolderMover;
+use Nidup\Architool\Infrastructure\Filesystem\FolderReferenceUpdater;
 use Nidup\Architool\Infrastructure\Filesystem\SpecFileMover;
 use Nidup\Architool\Infrastructure\Filesystem\SpecFileReferenceUpdater;
 use Nidup\Architool\Infrastructure\Filesystem\FsSpecNamespaceConfigurator;
@@ -42,9 +43,8 @@ class StepCommandsHandler
 
         $commands = $step->createReworkCodebaseCommands();
 
-        $mover = new FsNamespaceExtractor($path);
-        $renamer = new FsNamespaceRenamer($path);
-        $namespaceHandler = new MoveLegacyNamespaceHandler($mover, $renamer);
+        $repo = new FsFolderRepository(new FolderMover($path), new FolderReferenceUpdater($path));
+        $namespaceHandler = new MoveLegacyFolderHandler($repo);
 
         $repo = new FsClassFileRepository(new ClassFileMover($path), new ClassFileReferenceUpdater($path));
         $classFileHandler = new MoveLegacyClassFileHandler($repo);
@@ -60,7 +60,7 @@ class StepCommandsHandler
         $codeReplacerHandler = new ReplaceCodeInClassHandler($codeReplacer);
 
         foreach ($commands as $command) {
-            if ($command instanceof MoveLegacyNamespace) {
+            if ($command instanceof MoveLegacyFolder) {
                 $namespaceHandler->handle($command);
                 $output->writeln(
                     sprintf(

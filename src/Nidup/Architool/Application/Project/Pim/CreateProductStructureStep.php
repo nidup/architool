@@ -7,7 +7,7 @@ namespace Nidup\Architool\Application\Project\Pim;
 use Nidup\Architool\Application\Project\Step;
 use Nidup\Architool\Application\Refactor\MoveLegacyClassFile;
 use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespace;
-use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
+use Nidup\Architool\Application\Refactor\MoveLegacyFolder;
 use Nidup\Architool\Application\Refactor\MoveLegacySpecFile;
 
 class CreateProductStructureStep implements Step
@@ -51,12 +51,12 @@ class CreateProductStructureStep implements Step
                 'Akeneo/Pim/ProductStructure/Domain',
                 'Configure Domain specs'
             ),
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/Core/AttributeType',
                 'Akeneo/Pim/ProductStructure/Domain/AttributeType',
                 'Extract product attribute types'
             ),
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/Core/spec/AttributeType',
                 'Akeneo/Pim/ProductStructure/Domain/spec/AttributeType',
                 'Extract product attribute types'

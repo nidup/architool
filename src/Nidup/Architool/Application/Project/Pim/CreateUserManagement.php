@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Nidup\Architool\Application\Project\Pim;
 
 use Nidup\Architool\Application\Project\Step;
-use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
+use Nidup\Architool\Application\Refactor\MoveLegacyFolder;
 
 class CreateUserManagement implements Step
 {
@@ -19,7 +19,7 @@ class CreateUserManagement implements Step
     {
         $commands = [
             // Domain
-            new MoveLegacyNamespace(
+            new MoveLegacyFolder(
                 'Pim/Component/User',
                 'Akeneo/Pim/UserManagement/Domain',
                 'Move user component as user management domain (some parts will be extracted later on)'

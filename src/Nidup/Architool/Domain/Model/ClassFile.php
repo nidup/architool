@@ -57,7 +57,7 @@ class ClassFile
     }
 
     /**
-     * @return ClassName|null
+     * @return ClassNamespace|null
      */
     public function getNewNamespace()
     {
