@@ -17,10 +17,10 @@ use Nidup\Architool\Application\Refactoring\ReplaceCodeInClass;
 use Nidup\Architool\Application\Refactoring\ReplaceCodeInClassHandler;
 use Nidup\Architool\Application\Refactoring\MoveLegacyNamespace;
 use Nidup\Architool\Application\Refactoring\MoveLegacyNamespaceHandler;
-use Nidup\Architool\Domain\ClassFileRepository;
+use Nidup\Architool\Infrastructure\Filesystem\FsClassFileRepository;
 use Nidup\Architool\Domain\SpecFileRepository;
-use Nidup\Architool\Infrastructure\Filesystem\FsClassFileMover;
-use Nidup\Architool\Infrastructure\Filesystem\FsClassFileReferenceUpdater;
+use Nidup\Architool\Infrastructure\Filesystem\ClassFileMover;
+use Nidup\Architool\Infrastructure\Filesystem\ClassFileReferenceUpdater;
 use Nidup\Architool\Infrastructure\Filesystem\FsCodeReplacer;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceExtractor;
 use Nidup\Architool\Infrastructure\Filesystem\FsNamespaceRenamer;
@@ -46,7 +46,7 @@ class StepCommandsHandler
         $renamer = new FsNamespaceRenamer($path);
         $namespaceHandler = new MoveLegacyNamespaceHandler($mover, $renamer);
 
-        $repo = new ClassFileRepository(new FsClassFileMover($path), new FsClassFileReferenceUpdater($path));
+        $repo = new FsClassFileRepository(new ClassFileMover($path), new ClassFileReferenceUpdater($path));
         $classFileHandler = new MoveLegacyClassFileHandler($repo);
 
         $repo = new SpecFileRepository(new FsSpecFileMover($path), new FsSpecFileReferenceUpdater($path));

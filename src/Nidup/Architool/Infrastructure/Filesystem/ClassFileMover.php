@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Domain\ClassFileMover;
 use Nidup\Architool\Domain\Model\ClassFile;
 use Symfony\Component\Filesystem\Filesystem;
 
-final class FsClassFileMover implements ClassFileMover
+class ClassFileMover
 {
     private $projectPath;
     private $filesystem;

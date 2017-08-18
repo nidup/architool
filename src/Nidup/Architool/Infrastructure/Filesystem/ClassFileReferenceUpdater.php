@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Domain\ClassFileReferenceUpdater;
 use Nidup\Architool\Domain\Model\ClassFile;
 use Nidup\Architool\Domain\Model\ClassFile\ClassNamespace;
 use Nidup\Architool\Domain\Model\ClassFile\ClassName;
 use Symfony\Component\Finder\Finder;
 
-final class FsClassFileReferenceUpdater implements ClassFileReferenceUpdater
+class ClassFileReferenceUpdater
 {
     private $projectPath;
     private $fileUpdater;

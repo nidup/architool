@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Application\Refactor;
 
+use Nidup\Architool\Domain\ClassFileRepository;
 use Nidup\Architool\Domain\Model\ClassFile\ClassName;
 use Nidup\Architool\Domain\Model\ClassFile\ClassNamespace;
-use Nidup\Architool\Domain\ClassFileRepository;
 
 final class MoveLegacyClassFileHandler
 {
