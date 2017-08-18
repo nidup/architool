@@ -11,8 +11,12 @@ class MoveLegacyClassFile
     private $description;
     private $className;
 
-    public function __construct(string $legacyNamespace, string $destinationNamespace, string $className, string $description)
-    {
+    public function __construct(
+        string $legacyNamespace,
+        string $destinationNamespace,
+        string $className,
+        string $description
+    ) {
         $this->legacyNamespace = $legacyNamespace;
         $this->destinationNamespace = $destinationNamespace;
         $this->description = $description;

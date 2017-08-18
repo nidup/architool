@@ -5,22 +5,22 @@ declare(strict_types=1);
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
 use Nidup\Architool\Domain\ClassFileRepository;
-use Nidup\Architool\Domain\Model\ClassFile\ClassName;
 use Nidup\Architool\Domain\Model\ClassFile\ClassNamespace;
 use Nidup\Architool\Domain\Model\ClassFile;
+use Nidup\Architool\Domain\Model\File\Name;
 
 class FsClassFileRepository implements ClassFileRepository
 {
     private $mover;
     private $updater;
 
-    public function __construct(ClassFileMover $mover, ClassFileReferenceUpdater $updater)
+    public function __construct(FileMover $mover, ClassFileReferenceUpdater $updater)
     {
         $this->mover = $mover;
         $this->updater = $updater;
     }
 
-    public function get(ClassNamespace $namespace, ClassName $name): ClassFile
+    public function get(ClassNamespace $namespace, Name $name): ClassFile
     {
         return new ClassFile($namespace, $name);
     }
@@ -34,8 +34,8 @@ class FsClassFileRepository implements ClassFileRepository
             throw new \LogicException(
                 sprintf(
                     'Calling update on a not modified file %s/%s',
-                    $class->getOriginalNamespace()->getName(),
-                    $class->getName()->getName()
+                    $class->getNamespace()->getName(),
+                    $class->getName()->getValue()
                 )
             );
         }

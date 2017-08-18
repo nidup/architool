@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Domain\Model;
 
-use Nidup\Architool\Domain\Model\SpecFile\SpecName;
+use Nidup\Architool\Domain\Model\File\Name;
+use Nidup\Architool\Domain\Model\File\Path;
 use Nidup\Architool\Domain\Model\SpecFile\SpecNamespace;
 
-class SpecFile
+class SpecFile implements File
 {
     private $originalNamespace;
     private $name;
@@ -15,9 +16,9 @@ class SpecFile
 
     /**
      * @param SpecNamespace $namespace
-     * @param SpecName      $name
+     * @param Name          $name
      */
-    public function __construct(SpecNamespace $namespace, SpecName $name)
+    public function __construct(SpecNamespace $namespace, Name $name)
     {
         $this->originalNamespace = $namespace;
         $this->name = $name;
@@ -43,15 +44,15 @@ class SpecFile
     /**
      * @return SpecNamespace
      */
-    public function getOriginalNamespace(): SpecNamespace
+    public function getNamespace(): SpecNamespace
     {
         return $this->originalNamespace;
     }
 
     /**
-     * @return SpecName
+     * @return Name
      */
-    public function getName(): SpecName
+    public function getName(): Name
     {
         return $this->name;
     }
@@ -62,5 +63,37 @@ class SpecFile
     public function getNewNamespace()
     {
         return $this->newNamespace;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPath(): Path
+    {
+        $fileExtension = '.php';
+        $fromFile = $this->getNamespace()->getName().DIRECTORY_SEPARATOR.$this->getName()->getValue().$fileExtension;
+
+        return new Path($fromFile);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDestinationDirectoryPath(): Path
+    {
+        $toDir = $this->getNewNamespace()->getName();
+
+        return new Path($toDir);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDestinationPath(): Path
+    {
+        $fileExtension = '.php';
+        $toFile = $this->getDestinationDirectoryPath()->getContent().DIRECTORY_SEPARATOR.$this->getName()->getValue().$fileExtension;
+
+        return new Path($toFile);
     }
 }

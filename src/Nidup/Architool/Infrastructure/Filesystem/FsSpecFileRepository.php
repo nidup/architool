@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
+use Nidup\Architool\Domain\Model\File\Name;
 use Nidup\Architool\Domain\Model\SpecFile;
-use Nidup\Architool\Domain\Model\SpecFile\SpecName;
 use Nidup\Architool\Domain\Model\SpecFile\SpecNamespace;
 use Nidup\Architool\Domain\SpecFileRepository;
 
@@ -14,13 +14,13 @@ class FsSpecFileRepository implements SpecFileRepository
     private $mover;
     private $updater;
 
-    public function __construct(SpecFileMover $mover, SpecFileReferenceUpdater $updater)
+    public function __construct(FileMover $mover, SpecFileReferenceUpdater $updater)
     {
         $this->mover = $mover;
         $this->updater = $updater;
     }
 
-    public function get(SpecNamespace $namespace, SpecName $name): SpecFile
+    public function get(SpecNamespace $namespace, Name $name): SpecFile
     {
         return new SpecFile($namespace, $name);
     }
@@ -34,8 +34,8 @@ class FsSpecFileRepository implements SpecFileRepository
             throw new \LogicException(
                 sprintf(
                     'Calling update on a not modified file %s/%s',
-                    $spec->getOriginalNamespace()->getName(),
-                    $spec->getName()->getName()
+                    $spec->getNamespace()->getName(),
+                    $spec->getName()->getValue()
                 )
             );
         }

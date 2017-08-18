@@ -5,8 +5,8 @@ namespace spec\Nidup\Architool\Application\Refactor;
 use Nidup\Architool\Application\Refactor\MoveLegacyClassFile;
 use Nidup\Architool\Domain\ClassFileRepository;
 use Nidup\Architool\Domain\Model\ClassFile;
-use Nidup\Architool\Domain\Model\ClassFile\ClassName;
 use Nidup\Architool\Domain\Model\ClassFile\ClassNamespace;
+use Nidup\Architool\Domain\Model\File\Name;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -23,7 +23,7 @@ class MoveLegacyClassFileHandlerSpec extends ObjectBehavior
         $command->getClassName()->willReturn('AttributeType');
         $command->getDestinationNamespace()->willReturn('Akeneo/Pim/ProductStructure/Domain');
 
-        $repository->get(Argument::type(ClassNamespace::class), Argument::type(ClassName::class))
+        $repository->get(Argument::type(ClassNamespace::class), Argument::type(Name::class))
             ->willReturn($file);
         $file->move(Argument::type(ClassNamespace::class))->shouldBeCalled();
         $repository->update($file)->shouldBeCalled();

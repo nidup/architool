@@ -2,20 +2,21 @@
 
 namespace spec\Nidup\Architool\Infrastructure\Filesystem;
 
+use Nidup\Architool\Domain\Model\File\Name;
 use Nidup\Architool\Domain\Model\SpecFile;
-use Nidup\Architool\Infrastructure\Filesystem\SpecFileMover;
+use Nidup\Architool\Infrastructure\Filesystem\FileMover;
 use Nidup\Architool\Infrastructure\Filesystem\SpecFileReferenceUpdater;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class FsSpecFileRepositorySpec extends ObjectBehavior
 {
-    function let(SpecFileMover $mover, SpecFileReferenceUpdater $updater)
+    function let(FileMover $mover, SpecFileReferenceUpdater $updater)
     {
         $this->beConstructedWith($mover, $updater);
     }
 
-    function it_get_a_class_file(SpecFile\SpecNamespace $namespace, SpecFile\SpecName $name)
+    function it_get_a_class_file(SpecFile\SpecNamespace $namespace, Name $name)
     {
         $this->get($namespace, $name)->shouldReturnAnInstanceOf(SpecFile::class);
     }
@@ -29,12 +30,12 @@ class FsSpecFileRepositorySpec extends ObjectBehavior
         $this->update($classFile);
     }
 
-    function it_throws_an_exception_when_trying_to_update_a_not_modified_class_file($mover, $updater, SpecFile $classFile, SpecFile\SpecNamespace $namespace, SpecFile\SpecName $classname)
+    function it_throws_an_exception_when_trying_to_update_a_not_modified_class_file($mover, $updater, SpecFile $classFile, SpecFile\SpecNamespace $namespace, Name $classname)
     {
-        $classFile->getOriginalNamespace()->willReturn($namespace);
+        $classFile->getNamespace()->willReturn($namespace);
         $namespace->getName()->willReturn('Pim/Component/Catalog');
         $classFile->getName()->willReturn($classname);
-        $classname->getName()->willReturn('AttributeType');
+        $classname->getValue()->willReturn('AttributeType');
 
         $classFile->hasMoved()->willReturn(false);
         $mover->move($classFile)->shouldNotBeCalled();

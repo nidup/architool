@@ -6,7 +6,7 @@ namespace Nidup\Architool\Infrastructure\Filesystem;
 
 use Nidup\Architool\Domain\Model\ClassFile;
 use Nidup\Architool\Domain\Model\ClassFile\ClassNamespace;
-use Nidup\Architool\Domain\Model\ClassFile\ClassName;
+use Nidup\Architool\Domain\Model\File\Name;
 use Symfony\Component\Finder\Finder;
 
 class ClassFileReferenceUpdater
@@ -22,7 +22,7 @@ class ClassFileReferenceUpdater
 
     public function update(ClassFile $class)
     {
-        $source = $class->getOriginalNamespace();
+        $source = $class->getNamespace();
         $destination = $class->getNewNamespace();
         $className = $class->getName();
 
@@ -35,14 +35,14 @@ class ClassFileReferenceUpdater
         $this->changeAppConfiguration($source, $destination, $className);
     }
 
-    private function changeDeclaration(ClassNamespace $source, ClassNamespace $destination, ClassName $className)
+    private function changeDeclaration(ClassNamespace $source, ClassNamespace $destination, Name $className)
     {
         $srcPath = $this->projectPath.DIRECTORY_SEPARATOR.'src';
         $destinationPath = $srcPath.DIRECTORY_SEPARATOR.$destination->getName();
         $finder = new Finder();
         $finder->files()
             ->in($destinationPath)
-            ->name($className->getName().'.php');
+            ->name($className->getValue().'.php');
 
         $sourceNamespacePattern = '/namespace '.str_replace('/', "\\\\", $source->getName()).'/';
         $destinationNamespaceDeclaration = 'namespace '.str_replace('/', "\\", $destination->getName());
@@ -52,7 +52,7 @@ class ClassFileReferenceUpdater
         }
     }
 
-    private function changeClassesReferences(ClassNamespace $source, ClassNamespace $destination, ClassName $className)
+    private function changeClassesReferences(ClassNamespace $source, ClassNamespace $destination, Name $className)
     {
         $finder = new Finder();
 
@@ -64,15 +64,15 @@ class ClassFileReferenceUpdater
             ->in([$srcPath, $behatPath, $testsPath])
             ->name('*.php');
 
-        $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $source->getName()."\\\\".$className->getName()).'/';
-        $destinationNamespace = ''.str_replace('/', "\\", $destination->getName()."\\".$className->getName());
+        $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $source->getName()."\\\\".$className->getValue()).'/';
+        $destinationNamespace = ''.str_replace('/', "\\", $destination->getName()."\\".$className->getValue());
 
         foreach ($finder as $file) {
             $this->fileUpdater->updateIfPossible($file, $sourceNamespacePattern, $destinationNamespace);
         }
     }
 
-    private function addMissingClassReferencesToExNeighbourClasses(ClassNamespace $source, ClassNamespace $destination, ClassName $className)
+    private function addMissingClassReferencesToExNeighbourClasses(ClassNamespace $source, ClassNamespace $destination, Name $className)
     {
         $finder = new Finder();
 
@@ -84,8 +84,8 @@ class ClassFileReferenceUpdater
             ->depth(0)
             ->name('*.php');
 
-        $classSearchPattern = '/'.$className->getName().'/';
-        $missingMovedClassUse = 'use '.str_replace('/', "\\", $destination->getName()."\\".$className->getName()).';';
+        $classSearchPattern = '/'.$className->getValue().'/';
+        $missingMovedClassUse = 'use '.str_replace('/', "\\", $destination->getName()."\\".$className->getValue()).';';
 
         foreach ($finder as $file) {
             if ($this->fileUpdater->containsContent($file, $classSearchPattern)) {
@@ -94,7 +94,7 @@ class ClassFileReferenceUpdater
         }
     }
 
-    private function addMissingExNeighboursReferencesToTheClass(ClassNamespace $source, ClassNamespace $destination, ClassName $className)
+    private function addMissingExNeighboursReferencesToTheClass(ClassNamespace $source, ClassNamespace $destination, Name $className)
     {
         $srcPath = $this->projectPath.DIRECTORY_SEPARATOR.'src';
         $newClassPath = $srcPath.DIRECTORY_SEPARATOR.$destination->getName();
@@ -102,7 +102,7 @@ class ClassFileReferenceUpdater
         $finder->files()
             ->in($newClassPath)
             ->depth(0)
-            ->name($className->getName().'.php');
+            ->name($className->getValue().'.php');
 
         $movedClassFile = null;
         foreach ($finder as $file) {
@@ -121,12 +121,12 @@ class ClassFileReferenceUpdater
             ->name('*.php');
 
         foreach ($finder as $file) {
-            $neighbourClassName = str_replace('.php','', $file->getFilename());
-            $missingNeighbougClassUse = 'use '.str_replace('/', "\\", $source->getName()."\\".$neighbourClassName).';';
+            $neighbourName = str_replace('.php','', $file->getFilename());
+            $missingNeighbougClassUse = 'use '.str_replace('/', "\\", $source->getName()."\\".$neighbourName).';';
 
-            $neighbourClassNameTypehintPattern = '/'.$neighbourClassName.' /';
-            $neighbourClassNameExtendsSeveralPattern = '/ '.$neighbourClassName.',/';
-            $neighbourClassNameExtendsOncePattern = '/ '.$neighbourClassName.'/';
+            $neighbourClassNameTypehintPattern = '/'.$neighbourName.' /';
+            $neighbourClassNameExtendsSeveralPattern = '/ '.$neighbourName.',/';
+            $neighbourClassNameExtendsOncePattern = '/ '.$neighbourName.'/';
 
             if ($this->fileUpdater->containsContent($movedClassFile, $neighbourClassNameTypehintPattern)) {
                 $this->fileUpdater->insertUseStatementAfterNamespace($movedClassFile, $missingNeighbougClassUse);
@@ -138,7 +138,7 @@ class ClassFileReferenceUpdater
         }
     }
 
-    private function changeServicesReferences(ClassNamespace $source, ClassNamespace $destination, ClassName $className)
+    private function changeServicesReferences(ClassNamespace $source, ClassNamespace $destination, Name $className)
     {
         $finder = new Finder();
 
@@ -148,15 +148,15 @@ class ClassFileReferenceUpdater
             ->in([$srcPath])
             ->name('*.yml');
 
-        $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $source->getName()."\\\\".$className->getName()).'/';
-        $destinationNamespace = ''.str_replace('/', "\\", $destination->getName()."\\".$className->getName());
+        $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $source->getName()."\\\\".$className->getValue()).'/';
+        $destinationNamespace = ''.str_replace('/', "\\", $destination->getName()."\\".$className->getValue());
 
         foreach ($finder as $file) {
             $this->fileUpdater->updateIfPossible($file, $sourceNamespacePattern, $destinationNamespace);
         }
     }
 
-    private function changeAppKernelBundles(ClassNamespace $source, ClassNamespace $destination, ClassName $className)
+    private function changeAppKernelBundles(ClassNamespace $source, ClassNamespace $destination, Name $className)
     {
         $finder = new Finder();
 
@@ -166,15 +166,15 @@ class ClassFileReferenceUpdater
             ->in($appPath)
             ->name('AppKernel.php');
 
-        $sourceNamespacePattern = '/new '.str_replace('/', "\\\\", $source->getName()."\\\\".$className->getName()).'/';
-        $destinationNamespace = 'new '.str_replace('/', "\\", $destination->getName()."\\".$className->getName());
+        $sourceNamespacePattern = '/new '.str_replace('/', "\\\\", $source->getName()."\\\\".$className->getValue()).'/';
+        $destinationNamespace = 'new '.str_replace('/', "\\", $destination->getName()."\\".$className->getValue());
 
         foreach ($finder as $file) {
             $this->fileUpdater->updateIfPossible($file, $sourceNamespacePattern, $destinationNamespace);
         }
     }
 
-    private function changeAppConfiguration(ClassNamespace $source, ClassNamespace $destination, ClassName $className)
+    private function changeAppConfiguration(ClassNamespace $source, ClassNamespace $destination, Name $className)
     {
         $finder = new Finder();
 
@@ -184,8 +184,8 @@ class ClassFileReferenceUpdater
             ->in($appPath)
             ->name('*.yml');
 
-        $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $source->getName()."\\\\".$className->getName()).'/';
-        $destinationNamespace = ''.str_replace('/', "\\", $destination->getName()."\\".$className->getName());
+        $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $source->getName()."\\\\".$className->getValue()).'/';
+        $destinationNamespace = ''.str_replace('/', "\\", $destination->getName()."\\".$className->getValue());
 
         foreach ($finder as $file) {
             $this->fileUpdater->updateIfPossible($file, $sourceNamespacePattern, $destinationNamespace);

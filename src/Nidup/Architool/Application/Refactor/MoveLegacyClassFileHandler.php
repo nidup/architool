@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Nidup\Architool\Application\Refactor;
 
 use Nidup\Architool\Domain\ClassFileRepository;
-use Nidup\Architool\Domain\Model\ClassFile\ClassName;
 use Nidup\Architool\Domain\Model\ClassFile\ClassNamespace;
+use Nidup\Architool\Domain\Model\File\Name;
 
 final class MoveLegacyClassFileHandler
 {
@@ -21,7 +21,7 @@ final class MoveLegacyClassFileHandler
     {
         $from = new ClassNamespace($command->getLegacyNamespace());
         $to = new ClassNamespace($command->getDestinationNamespace());
-        $name = new ClassName($command->getClassName());
+        $name = new Name($command->getClassName());
 
         $classFile = $this->repository->get($from, $name);
         $classFile->move($to);

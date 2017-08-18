@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
+use Nidup\Architool\Domain\Model\File\Name;
 use Nidup\Architool\Domain\Model\SpecFile;
 use Nidup\Architool\Domain\Model\SpecFile\SpecNamespace;
-use Nidup\Architool\Domain\Model\SpecFile\SpecName;
 use Symfony\Component\Finder\Finder;
 
 class SpecFileReferenceUpdater
@@ -22,21 +22,21 @@ class SpecFileReferenceUpdater
 
     public function update(SpecFile $spec)
     {
-        $source = $spec->getOriginalNamespace();
+        $source = $spec->getNamespace();
         $destination = $spec->getNewNamespace();
         $className = $spec->getName();
 
         $this->changeDeclaration($source, $destination, $className);
     }
 
-    private function changeDeclaration(SpecNamespace $source, SpecNamespace $destination, SpecName $className)
+    private function changeDeclaration(SpecNamespace $source, SpecNamespace $destination, Name $className)
     {
         $srcPath = $this->projectPath.DIRECTORY_SEPARATOR.'src';
         $destinationPath = $srcPath.DIRECTORY_SEPARATOR.$destination->getName();
         $finder = new Finder();
         $finder->files()
             ->in($destinationPath)
-            ->name($className->getName().'.php');
+            ->name($className->getValue().'.php');
 
         $sourceNamespacePattern = str_replace('/spec', '', $source->getName());
         $sourceNamespacePattern = "/namespace spec\\\\".str_replace('/', "\\\\", $sourceNamespacePattern).'/';

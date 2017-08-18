@@ -4,22 +4,23 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Domain\Model;
 
-use Nidup\Architool\Domain\Model\ClassFile\ClassName;
 use Nidup\Architool\Domain\Model\ClassFile\ClassNamespace;
+use Nidup\Architool\Domain\Model\File\Name;
+use Nidup\Architool\Domain\Model\File\Path;
 
-class ClassFile
+class ClassFile implements File
 {
-    private $originalNamespace;
+    private $namespace;
     private $name;
     private $newNamespace;
 
     /**
      * @param ClassNamespace $namespace
-     * @param ClassName      $name
+     * @param Name           $name
      */
-    public function __construct(ClassNamespace $namespace, ClassName $name)
+    public function __construct(ClassNamespace $namespace, Name $name)
     {
-        $this->originalNamespace = $namespace;
+        $this->namespace = $namespace;
         $this->name = $name;
         $this->newNamespace = null;
     }
@@ -41,19 +42,19 @@ class ClassFile
     }
 
     /**
-     * @return ClassNamespace
+     * @return Name
      */
-    public function getOriginalNamespace(): ClassNamespace
+    public function getName(): Name
     {
-        return $this->originalNamespace;
+        return $this->name;
     }
 
     /**
-     * @return ClassName
+     * @return ClassNamespace
      */
-    public function getName(): ClassName
+    public function getNamespace(): ClassNamespace
     {
-        return $this->name;
+        return $this->namespace;
     }
 
     /**
@@ -62,5 +63,37 @@ class ClassFile
     public function getNewNamespace()
     {
         return $this->newNamespace;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPath(): Path
+    {
+        $fileExtension = '.php';
+        $fromFile = $this->getNamespace()->getName().DIRECTORY_SEPARATOR.$this->getName()->getValue().$fileExtension;
+
+        return new Path($fromFile);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDestinationDirectoryPath(): Path
+    {
+        $toDir = $this->getNewNamespace()->getName();
+
+        return new Path($toDir);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDestinationPath(): Path
+    {
+        $fileExtension = '.php';
+        $toFile = $this->getDestinationDirectoryPath()->getContent().DIRECTORY_SEPARATOR.$this->getName()->getValue().$fileExtension;
+
+        return new Path($toFile);
     }
 }

@@ -21,12 +21,11 @@ use Nidup\Architool\Infrastructure\Filesystem\FsClassFileRepository;
 use Nidup\Architool\Infrastructure\Filesystem\FsFolderRepository;
 use Nidup\Architool\Infrastructure\Filesystem\FsSpecConfigurationFileRepository;
 use Nidup\Architool\Infrastructure\Filesystem\FsSpecFileRepository;
-use Nidup\Architool\Infrastructure\Filesystem\ClassFileMover;
+use Nidup\Architool\Infrastructure\Filesystem\FileMover;
 use Nidup\Architool\Infrastructure\Filesystem\ClassFileReferenceUpdater;
 use Nidup\Architool\Infrastructure\Filesystem\FsCodeReplacer;
 use Nidup\Architool\Infrastructure\Filesystem\FolderMover;
 use Nidup\Architool\Infrastructure\Filesystem\FolderReferenceUpdater;
-use Nidup\Architool\Infrastructure\Filesystem\SpecFileMover;
 use Nidup\Architool\Infrastructure\Filesystem\SpecFileReferenceUpdater;
 use Nidup\Architool\Infrastructure\Filesystem\SpecConfigurationUpdater;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -47,10 +46,10 @@ class StepCommandsHandler
         $repo = new FsFolderRepository(new FolderMover($path), new FolderReferenceUpdater($path));
         $namespaceHandler = new MoveLegacyFolderHandler($repo);
 
-        $repo = new FsClassFileRepository(new ClassFileMover($path), new ClassFileReferenceUpdater($path));
+        $repo = new FsClassFileRepository(new FileMover($path), new ClassFileReferenceUpdater($path));
         $classFileHandler = new MoveLegacyClassFileHandler($repo);
 
-        $repo = new FsSpecFileRepository(new SpecFileMover($path), new SpecFileReferenceUpdater($path));
+        $repo = new FsSpecFileRepository(new FileMover($path), new SpecFileReferenceUpdater($path));
         $specHandler = new MoveLegacySpecFileHandler($repo);
 
         $configurator = new SpecConfigurationUpdater($path);

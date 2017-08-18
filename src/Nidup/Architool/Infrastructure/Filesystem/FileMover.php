@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Domain\Model\ClassFile;
+use Nidup\Architool\Domain\Model\File;
 use Symfony\Component\Filesystem\Filesystem;
 
-class ClassFileMover
+class FileMover
 {
     private $projectPath;
     private $filesystem;
@@ -18,14 +18,13 @@ class ClassFileMover
         $this->filesystem = new Filesystem();
     }
 
-    public function move(ClassFile $class)
+    public function move(File $file)
     {
         $srcPath = $this->projectPath.DIRECTORY_SEPARATOR.'src';
 
-        $fileExtension = '.php';
-        $fromFile = $srcPath.DIRECTORY_SEPARATOR.$class->getOriginalNamespace()->getName().DIRECTORY_SEPARATOR.$class->getName()->getName().$fileExtension;
-        $toDir = $srcPath.DIRECTORY_SEPARATOR.$class->getNewNamespace()->getName();
-        $toFile = $toDir.DIRECTORY_SEPARATOR.$class->getName()->getName().$fileExtension;
+        $fromFile = $srcPath.DIRECTORY_SEPARATOR.$file->getPath()->getContent();
+        $toDir = $srcPath.DIRECTORY_SEPARATOR.$file->getDestinationDirectoryPath()->getContent();
+        $toFile = $srcPath.DIRECTORY_SEPARATOR.$file->getDestinationPath()->getContent();
 
         if (!$this->filesystem->exists($toDir)) {
             $this->filesystem->mkdir($toDir);
