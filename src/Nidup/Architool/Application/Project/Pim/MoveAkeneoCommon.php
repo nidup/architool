@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Nidup\Architool\Application\Project\Pim;
 
 use Nidup\Architool\Application\Project\Step;
-use Nidup\Architool\Application\Refactoring\ReconfigureSpecNamespace;
+use Nidup\Architool\Application\Refactor\ReconfigureSpecFolder;
 use Nidup\Architool\Application\Refactor\MoveLegacyFolder;
 
 class MoveAkeneoCommon implements Step
@@ -24,7 +24,7 @@ class MoveAkeneoCommon implements Step
                 'Akeneo/Common/Component',
                 'Move Akeneo common components'
             ),
-            new ReconfigureSpecNamespace(
+            new ReconfigureSpecFolder(
                 'Akeneo/Component',
                 'Akeneo/Common/Component',
                 'Move Akeneo common components'
@@ -35,7 +35,7 @@ class MoveAkeneoCommon implements Step
                 'Akeneo/Common/Bundle',
                 'Move Akeneo common bundles'
             ),
-            new ReconfigureSpecNamespace(
+            new ReconfigureSpecFolder(
                 'Akeneo/Bundle',
                 'Akeneo/Common/Bundle',
                 'Move Akeneo common bundles'

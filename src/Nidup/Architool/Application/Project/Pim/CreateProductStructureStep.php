@@ -6,7 +6,7 @@ namespace Nidup\Architool\Application\Project\Pim;
 
 use Nidup\Architool\Application\Project\Step;
 use Nidup\Architool\Application\Refactor\MoveLegacyClassFile;
-use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespace;
+use Nidup\Architool\Application\Refactor\ConfigureSpecFolder;
 use Nidup\Architool\Application\Refactor\MoveLegacyFolder;
 use Nidup\Architool\Application\Refactor\MoveLegacySpecFile;
 
@@ -47,7 +47,7 @@ class CreateProductStructureStep implements Step
                 'AttributeTypeRegistrySpec',
                 'Extract attribute types'
             ),
-            new ConfigureSpecNamespace(
+            new ConfigureSpecFolder(
                 'Akeneo/Pim/ProductStructure/Domain',
                 'Configure Domain specs'
             ),

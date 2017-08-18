@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Nidup\Architool\Application\Project\Pim;
 
 use Nidup\Architool\Application\Project\Step;
-use Nidup\Architool\Application\Refactoring\ConfigureSpecNamespace;
-use Nidup\Architool\Application\Refactoring\ReconfigureSpecNamespace;
+use Nidup\Architool\Application\Refactor\ConfigureSpecFolder;
+use Nidup\Architool\Application\Refactor\ReconfigureSpecFolder;
 use Nidup\Architool\Application\Refactor\MoveLegacyFolder;
 use Nidup\Architool\Application\Refactoring\ReplaceCodeInClass;
 
@@ -28,7 +28,7 @@ class CreateProductEnrichment implements Step
                 'Akeneo/Pim/ProductEnrichment/Domain',
                 'Move catalog component as product enrichment domain (some parts will be extracted later in product structure & catalog structure)'
             ),
-            new ReconfigureSpecNamespace(
+            new ReconfigureSpecFolder(
                 'Pim/Component/Catalog',
                 'Akeneo/Pim/ProductEnrichment/Domain',
                 'Configure product enrichment specs'
@@ -64,7 +64,7 @@ class CreateProductEnrichment implements Step
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Elasticsearch/Core/spec',
                 'Extract ElasticSearch infrastructure'
             ),
-            new ConfigureSpecNamespace(
+            new ConfigureSpecFolder(
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Elasticsearch/Core',
                 'Extract ElasticSearch infrastructure'
             ),
@@ -80,7 +80,7 @@ class CreateProductEnrichment implements Step
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/Core/spec',
                 'Extract Doctrine infrastructure'
             ),
-            new ConfigureSpecNamespace(
+            new ConfigureSpecFolder(
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/Core',
                 'Extract Doctrine infrastructure'
             ),
@@ -98,7 +98,7 @@ class CreateProductEnrichment implements Step
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/Core',
                 'Extract Symfony infrastructure'
             ),
-            new ReconfigureSpecNamespace(
+            new ReconfigureSpecFolder(
                 'Pim/Bundle/CatalogBundle',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/Core',
                 'Extract Symfony infrastructure'
@@ -115,7 +115,7 @@ class CreateProductEnrichment implements Step
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Cli/Core/spec/Command',
                 'Extract Cli infrastructure'
             ),
-            new ConfigureSpecNamespace(
+            new ConfigureSpecFolder(
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Cli/Core',
                 'Extract Cli infrastructure'
             ),
@@ -126,7 +126,7 @@ class CreateProductEnrichment implements Step
                 'Akeneo/Pim/ProductEnrichment/Application/Api',
                 'Extract API features in application'
             ),
-            new ReconfigureSpecNamespace(
+            new ReconfigureSpecFolder(
                 'Pim/Component/Api',
                 'Akeneo/Pim/ProductEnrichment/Application/Api',
                 'Extract API features in application'
@@ -138,7 +138,7 @@ class CreateProductEnrichment implements Step
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Http/Api',
                 'Extract API Http infrastructure'
             ),
-            new ReconfigureSpecNamespace(
+            new ReconfigureSpecFolder(
                 'Pim/Bundle/ApiBundle',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Http/Api',
                 'Extract API Http infrastructure'
@@ -162,7 +162,7 @@ class CreateProductEnrichment implements Step
                 'Akeneo/Pim/ProductEnrichment/Application/ImportExport',
                 'Extract Import/Export features in application'
             ),
-            new ReconfigureSpecNamespace(
+            new ReconfigureSpecFolder(
                 'Pim/Component/Connector',
                 'Akeneo/Pim/ProductEnrichment/Application/ImportExport',
                 'Extract Import/Export features in application'
@@ -174,7 +174,7 @@ class CreateProductEnrichment implements Step
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/ImportExport',
                 'Extract Import/Export symfony infrastructure'
             ),
-            new ReconfigureSpecNamespace(
+            new ReconfigureSpecFolder(
                 'Pim/Bundle/ConnectorBundle',
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Symfony/ImportExport',
                 'Extract Import/Export symfony infrastructure'
@@ -196,7 +196,7 @@ class CreateProductEnrichment implements Step
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/ImportExport/spec',
                 'Extract Import/Export Doctrine infrastructure'
             ),
-            new ConfigureSpecNamespace(
+            new ConfigureSpecFolder(
                 'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/ImportExport',
                 'Extract Import/Export Doctrine infrastructure'
             ),
@@ -208,7 +208,7 @@ class CreateProductEnrichment implements Step
                 'Akeneo/Pim/ProductEnrichment/Application/Edition',
                 'Extract Edition features in application'
             ),
-            new ReconfigureSpecNamespace(
+            new ReconfigureSpecFolder(
                 'Pim/Component/Enrich',
                 'Akeneo/Pim/ProductEnrichment/Application/Edition',
                 'Extract Edition features in application'

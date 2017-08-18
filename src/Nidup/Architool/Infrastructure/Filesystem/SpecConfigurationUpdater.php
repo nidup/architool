@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Application\Refactoring\SpecNamespaceConfigurator;
-use Nidup\Architool\Domain\CodeNamespace;
+use Nidup\Architool\Domain\Model\Folder;
 use Symfony\Component\Finder\Finder;
 
-final class FsSpecNamespaceConfigurator implements SpecNamespaceConfigurator
+final class SpecConfigurationUpdater
 {
     private $projectPath;
     private $fileUpdater;
@@ -19,8 +18,11 @@ final class FsSpecNamespaceConfigurator implements SpecNamespaceConfigurator
         $this->fileUpdater = new FsFileUpdater();
     }
 
-    public function reconfigure(CodeNamespace $fromNamespace, CodeNamespace $toNamespace)
+    public function reconfigure(Folder $folder)
     {
+        $fromNamespace = $folder->getOriginalNamespace();
+        $toNamespace = $folder->getNewNamespace();
+
         $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $fromNamespace->getName()).'/';
         $destinationNamespace = ''.str_replace('/', "\\", $toNamespace->getName());
 
@@ -42,8 +44,10 @@ final class FsSpecNamespaceConfigurator implements SpecNamespaceConfigurator
         );
     }
 
-    public function configure(CodeNamespace $newNamespace)
+    public function configure(Folder $folder)
     {
+        $newNamespace = $folder->getOriginalNamespace();
+
         $namespace = ''.str_replace('/', "\\", $newNamespace->getName());
         $namespacePath = 'src/'.$newNamespace->getName();
         $configName = str_replace('/', '', $newNamespace->getName());
