@@ -16,7 +16,7 @@ class FolderReferenceUpdater
     public function __construct(string $projectPath)
     {
         $this->projectPath = $projectPath;
-        $this->fileUpdater = new FsFileUpdater();
+        $this->fileUpdater = new FileUpdater();
     }
 
     public function update(Folder $folder)

@@ -15,7 +15,7 @@ final class SpecConfigurationUpdater
     public function __construct(string $projectPath)
     {
         $this->projectPath = $projectPath;
-        $this->fileUpdater = new FsFileUpdater();
+        $this->fileUpdater = new FileUpdater();
     }
 
     public function reconfigure(Folder $folder)

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-class FsFileUpdater
+class FileUpdater
 {
     public function updateIfPossible(\SplFileInfo $file, string $toReplacePattern, string $replacementValue)
     {

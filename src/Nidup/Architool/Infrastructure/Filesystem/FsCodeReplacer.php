@@ -18,7 +18,7 @@ class FsCodeReplacer implements CodeReplacer
     public function __construct(string $projectPath)
     {
         $this->projectPath = $projectPath;
-        $this->fileUpdater = new FsFileUpdater();
+        $this->fileUpdater = new FileUpdater();
     }
 
     public function replace(
