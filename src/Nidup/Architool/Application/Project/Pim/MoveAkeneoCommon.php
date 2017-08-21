@@ -40,6 +40,18 @@ class MoveAkeneoCommon implements Step
                 'Akeneo/Common/Bundle',
                 'Move Akeneo common bundles'
             ),
+
+            /*
+            new MoveLegacyFolder(
+                'Pim/Bundle/UIBundle',
+                'Akeneo/Common/Bundle/UIBundle',
+                'Move Akeneo UI common (css & base js)'
+            ),
+            new ReconfigureSpecFolder(
+                'Pim/Bundle/UIBundle',
+                'Akeneo/Common/Bundle/UIBundle',
+                'Move Akeneo common (css & base js)'
+            ),*/
         ];
 
         return $commands;

@@ -79,7 +79,9 @@ class HexagonalizeCommand extends Command
         $cleaner = new FsCacheCleaner($projectPath);
         $handler = new FinalizeWorkspaceHandler($cleaner);
         $handler->handle($command);
-        $output->writeln(sprintf('[x] Project cache has been cleaned', $projectPath));
+        $output->writeln(sprintf('[x] Project cache has been cleaned %s', $projectPath));
+
+        $output->writeln(sprintf('[ ] Refresh your frontend assets with bin/docker/pim-front.sh or equivalent in %s', $projectPath));
     }
 
     private function printTitle(OutputInterface $output)

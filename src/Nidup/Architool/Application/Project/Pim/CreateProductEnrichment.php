@@ -213,6 +213,50 @@ class CreateProductEnrichment implements Step
                 'Akeneo/Pim/ProductEnrichment/Application/Edition',
                 'Extract Edition features in application'
             ),
+
+            // Edition Infrastructure UI
+            new MoveLegacyFolder(
+                'Pim/Bundle/EnrichBundle',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Http/Edition',
+                'Extract UI in infrastructure http UI'
+            ),
+            new ReconfigureSpecFolder(
+                'Pim/Bundle/EnrichBundle',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Http/Edition',
+                'Extract UI in infrastructure http UI'
+            ),
+            // Edition Infrastructure ElasticSearch UI
+            new MoveLegacyFolder(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Http/Edition/Elasticsearch',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Elasticsearch/Edition',
+                'Extract elastic search in infrastructure'
+            ),
+            new MoveLegacyFolder(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Http/Edition/spec/Elasticsearch',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Elasticsearch/Edition/spec',
+                'Extract elastic search in infrastructure'
+            ),
+            new ConfigureSpecFolder(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Elasticsearch/Edition',
+                'Extract elastic search infrastructure'
+            ),
+            // Edition Infrastructure Doctrine UI
+            new MoveLegacyFolder(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Http/Edition/Doctrine',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/Edition',
+                'Extract Doctrine in infrastructure'
+            ),
+            new MoveLegacyFolder(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Http/Edition/spec/Doctrine',
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/Edition/spec',
+                'Extract Doctrine in infrastructure'
+            ),
+            new ConfigureSpecFolder(
+                'Akeneo/Pim/ProductEnrichment/Infrastructure/Doctrine/Edition',
+                'Extract Doctrine infrastructure'
+            ),
+
+
         ];
 
         return $commands;
