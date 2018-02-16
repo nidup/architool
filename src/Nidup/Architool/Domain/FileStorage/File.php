@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nidup\Architool\Domain\Model;
+namespace Nidup\Architool\Domain\FileStorage;
 
-use Nidup\Architool\Domain\Model\File\Name;
-use Nidup\Architool\Domain\Model\File\Path;
+use Nidup\Architool\Domain\FileStorage\File\Name;
+use Nidup\Architool\Domain\FileStorage\File\Path;
 
 interface File
 {

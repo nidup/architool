@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nidup\Architool\Domain\Model\File;
+namespace Nidup\Architool\Domain\FileStorage\File;
 
 class Name
 {

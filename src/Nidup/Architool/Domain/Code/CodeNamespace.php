@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Nidup\Architool\Domain\Model\SpecFile;
+namespace Nidup\Architool\Domain\Code;
 
-class SpecNamespace
+final class CodeNamespace
 {
     private $name;
 

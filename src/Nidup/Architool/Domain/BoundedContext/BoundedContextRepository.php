@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nidup\Architool\Domain;
-
-use Nidup\Architool\Domain\Model\BoundedContext;
+namespace Nidup\Architool\Domain\BoundedContext;
 
 interface BoundedContextRepository
 {

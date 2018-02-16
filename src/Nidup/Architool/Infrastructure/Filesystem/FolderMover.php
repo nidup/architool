@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
 use Nidup\Architool\Application\Refactoring\NamespaceExtractor;
-use Nidup\Architool\Domain\Model\Folder;
+use Nidup\Architool\Domain\FileStorage\Folder;
 use Symfony\Component\Filesystem\Filesystem;
 
 class FolderMover

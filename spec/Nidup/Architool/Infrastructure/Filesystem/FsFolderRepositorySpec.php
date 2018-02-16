@@ -2,12 +2,11 @@
 
 namespace spec\Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Domain\Model\Folder;
-use Nidup\Architool\Domain\Model\Folder\FolderNamespace;
+use Nidup\Architool\Domain\FileStorage\Folder;
+use Nidup\Architool\Domain\FileStorage\Folder\FolderNamespace;
 use Nidup\Architool\Infrastructure\Filesystem\FolderMover;
 use Nidup\Architool\Infrastructure\Filesystem\FolderReferenceUpdater;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class FsFolderRepositorySpec extends ObjectBehavior
 {

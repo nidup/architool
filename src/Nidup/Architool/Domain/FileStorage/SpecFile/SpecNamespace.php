@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Nidup\Architool\Domain\Model\BoundedContext;
+namespace Nidup\Architool\Domain\FileStorage\SpecFile;
 
-class Layer
+class SpecNamespace
 {
     private $name;
 

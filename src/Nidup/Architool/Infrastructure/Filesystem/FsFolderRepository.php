@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Domain\FolderRepository;
-use Nidup\Architool\Domain\Model\Folder;
-use Nidup\Architool\Domain\Model\Folder\FolderNamespace;
+use Nidup\Architool\Domain\FileStorage\Folder;
+use Nidup\Architool\Domain\FileStorage\Folder\FolderNamespace;
+use Nidup\Architool\Domain\FileStorage\FolderRepository;
 
 class FsFolderRepository implements FolderRepository
 {

@@ -3,9 +3,9 @@
 namespace spec\Nidup\Architool\Application\Refactor;
 
 use Nidup\Architool\Application\Refactor\MoveLegacySpecFile;
-use Nidup\Architool\Domain\Model\File\Name;
-use Nidup\Architool\Domain\Model\SpecFile;
-use Nidup\Architool\Domain\Model\SpecFile\SpecNamespace;
+use Nidup\Architool\Domain\FileStorage\File\Name;
+use Nidup\Architool\Domain\FileStorage\SpecFile;
+use Nidup\Architool\Domain\FileStorage\SpecFile\SpecNamespace;
 use Nidup\Architool\Infrastructure\Filesystem\FsSpecFileRepository;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

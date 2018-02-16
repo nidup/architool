@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Nidup\Architool\Domain\Model\Folder;
+namespace Nidup\Architool\Domain\BoundedContext;
 
-class FolderNamespace
+class Layer
 {
     private $name;
 

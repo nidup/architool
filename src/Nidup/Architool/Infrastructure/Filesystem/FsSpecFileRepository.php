@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Domain\Model\File\Name;
-use Nidup\Architool\Domain\Model\SpecFile;
-use Nidup\Architool\Domain\Model\SpecFile\SpecNamespace;
-use Nidup\Architool\Domain\SpecFileRepository;
+use Nidup\Architool\Domain\FileStorage\File\Name;
+use Nidup\Architool\Domain\FileStorage\SpecFile;
+use Nidup\Architool\Domain\FileStorage\SpecFileRepository;
+use Nidup\Architool\Domain\FileStorage\SpecFile\SpecNamespace;
 
 class FsSpecFileRepository implements SpecFileRepository
 {

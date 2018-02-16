@@ -1,9 +1,8 @@
 <?php
 
-namespace Nidup\Architool\Domain;
+namespace Nidup\Architool\Domain\FileStorage;
 
-use Nidup\Architool\Domain\Model\Folder;
-use Nidup\Architool\Domain\Model\Folder\FolderNamespace;
+use Nidup\Architool\Domain\FileStorage\Folder\FolderNamespace;
 
 interface FolderRepository
 {

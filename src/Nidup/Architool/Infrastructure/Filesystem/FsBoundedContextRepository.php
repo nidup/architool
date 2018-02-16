@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Domain\Model\BoundedContext;
-use Nidup\Architool\Domain\BoundedContextRepository;
-use phpDocumentor\Reflection\File;
+use Nidup\Architool\Domain\BoundedContext\BoundedContext;
+use Nidup\Architool\Domain\BoundedContext\BoundedContextRepository;
 use Symfony\Component\Filesystem\Filesystem;
 
 final class FsBoundedContextRepository implements BoundedContextRepository
