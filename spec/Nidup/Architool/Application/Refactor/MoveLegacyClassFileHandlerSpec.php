@@ -3,10 +3,10 @@
 namespace spec\Nidup\Architool\Application\Refactor;
 
 use Nidup\Architool\Application\Refactor\MoveLegacyClassFile;
-use Nidup\Architool\Domain\ClassFileRepository;
-use Nidup\Architool\Domain\Model\ClassFile;
-use Nidup\Architool\Domain\Model\ClassFile\ClassNamespace;
-use Nidup\Architool\Domain\Model\File\Name;
+use Nidup\Architool\Domain\FileStorage\ClassFile;
+use Nidup\Architool\Domain\FileStorage\ClassFile\ClassNamespace;
+use Nidup\Architool\Domain\FileStorage\ClassFileRepository;
+use Nidup\Architool\Domain\FileStorage\File\Name;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

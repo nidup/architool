@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Domain\Model\Folder;
-use Nidup\Architool\Domain\Model\SpecConfigurationFile;
-use Nidup\Architool\Domain\SpecConfigurationFileRepository;
+use Nidup\Architool\Domain\FileStorage\Folder;
+use Nidup\Architool\Domain\FileStorage\SpecConfigurationFile;
+use Nidup\Architool\Domain\FileStorage\SpecConfigurationFileRepository;
 
 class FsSpecConfigurationFileRepository implements SpecConfigurationFileRepository
 {

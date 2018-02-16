@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Nidup\Architool\Domain\Model;
+namespace Nidup\Architool\Domain\FileStorage;
 
-use Nidup\Architool\Domain\Model\Folder\FolderNamespace;
+use Nidup\Architool\Domain\FileStorage\Folder\FolderNamespace;
 
 class Folder
 {

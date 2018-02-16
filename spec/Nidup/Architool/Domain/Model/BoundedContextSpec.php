@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Nidup\Architool\Domain\Model;
+namespace spec\Nidup\Architool\Domain;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

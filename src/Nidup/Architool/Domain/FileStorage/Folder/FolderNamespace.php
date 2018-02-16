@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Nidup\Architool\Domain\Model\ClassFile;
+namespace Nidup\Architool\Domain\FileStorage\Folder;
 
-class ClassNamespace
+class FolderNamespace
 {
     private $name;
 

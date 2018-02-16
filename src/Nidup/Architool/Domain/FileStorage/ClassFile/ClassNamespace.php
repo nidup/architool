@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Nidup\Architool\Domain;
+namespace Nidup\Architool\Domain\FileStorage\ClassFile;
 
-final class CodeNamespace
+class ClassNamespace
 {
     private $name;
 

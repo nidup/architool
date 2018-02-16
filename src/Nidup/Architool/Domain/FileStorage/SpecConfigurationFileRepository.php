@@ -1,8 +1,6 @@
 <?php
 
-namespace Nidup\Architool\Domain;
-
-use Nidup\Architool\Domain\Model\SpecConfigurationFile;
+namespace Nidup\Architool\Domain\FileStorage;
 
 interface SpecConfigurationFileRepository
 {

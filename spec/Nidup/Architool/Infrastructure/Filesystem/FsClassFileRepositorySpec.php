@@ -2,12 +2,11 @@
 
 namespace spec\Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Domain\Model\ClassFile;
-use Nidup\Architool\Domain\Model\File\Name;
-use Nidup\Architool\Infrastructure\Filesystem\FileMover;
+use Nidup\Architool\Domain\FileStorage\ClassFile;
+use Nidup\Architool\Domain\FileStorage\File\Name;
 use Nidup\Architool\Infrastructure\Filesystem\ClassFileReferenceUpdater;
+use Nidup\Architool\Infrastructure\Filesystem\FileMover;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class FsClassFileRepositorySpec extends ObjectBehavior
 {

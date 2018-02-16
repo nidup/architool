@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
 use Nidup\Architool\Application\Refactoring\CodeReplacer;
-use Nidup\Architool\Domain\CodeFragment;
-use Nidup\Architool\Domain\CodeNamespace;
-use Nidup\Architool\Domain\Model\File\Name;
+use Nidup\Architool\Domain\Code\CodeFragment;
+use Nidup\Architool\Domain\Code\CodeNamespace;
+use Nidup\Architool\Domain\FileStorage\File\Name;
 use Symfony\Component\Finder\Finder;
 
 class FsCodeReplacer implements CodeReplacer

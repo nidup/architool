@@ -2,33 +2,33 @@
 
 declare(strict_types=1);
 
-namespace Nidup\Architool\Domain\Model;
+namespace Nidup\Architool\Domain\FileStorage;
 
-use Nidup\Architool\Domain\Model\ClassFile\ClassNamespace;
-use Nidup\Architool\Domain\Model\File\Name;
-use Nidup\Architool\Domain\Model\File\Path;
+use Nidup\Architool\Domain\FileStorage\File\Name;
+use Nidup\Architool\Domain\FileStorage\File\Path;
+use Nidup\Architool\Domain\FileStorage\SpecFile\SpecNamespace;
 
-class ClassFile implements File
+class SpecFile implements File
 {
-    private $namespace;
+    private $originalNamespace;
     private $name;
     private $newNamespace;
 
     /**
-     * @param ClassNamespace $namespace
-     * @param Name           $name
+     * @param SpecNamespace $namespace
+     * @param Name          $name
      */
-    public function __construct(ClassNamespace $namespace, Name $name)
+    public function __construct(SpecNamespace $namespace, Name $name)
     {
-        $this->namespace = $namespace;
+        $this->originalNamespace = $namespace;
         $this->name = $name;
         $this->newNamespace = null;
     }
 
     /**
-     * @param ClassNamespace $newNamespace
+     * @param SpecNamespace $newNamespace
      */
-    public function move(ClassNamespace $newNamespace)
+    public function move(SpecNamespace $newNamespace)
     {
         $this->newNamespace = $newNamespace;
     }
@@ -42,6 +42,14 @@ class ClassFile implements File
     }
 
     /**
+     * @return SpecNamespace
+     */
+    public function getNamespace(): SpecNamespace
+    {
+        return $this->originalNamespace;
+    }
+
+    /**
      * @return Name
      */
     public function getName(): Name
@@ -50,15 +58,7 @@ class ClassFile implements File
     }
 
     /**
-     * @return ClassNamespace
-     */
-    public function getNamespace(): ClassNamespace
-    {
-        return $this->namespace;
-    }
-
-    /**
-     * @return ClassNamespace|null
+     * @return SpecNamespace|null
      */
     public function getNewNamespace()
     {

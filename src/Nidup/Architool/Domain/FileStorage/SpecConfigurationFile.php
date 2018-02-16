@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nidup\Architool\Domain\Model;
+namespace Nidup\Architool\Domain\FileStorage;
 
 class SpecConfigurationFile
 {

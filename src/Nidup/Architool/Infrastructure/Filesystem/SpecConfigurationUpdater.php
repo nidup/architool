@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Domain\Model\Folder;
+use Nidup\Architool\Domain\FileStorage\Folder;
 use Symfony\Component\Finder\Finder;
 
 final class SpecConfigurationUpdater

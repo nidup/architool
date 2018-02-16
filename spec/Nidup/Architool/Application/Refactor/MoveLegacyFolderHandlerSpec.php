@@ -3,9 +3,9 @@
 namespace spec\Nidup\Architool\Application\Refactor;
 
 use Nidup\Architool\Application\Refactor\MoveLegacyFolder;
-use Nidup\Architool\Domain\FolderRepository;
-use Nidup\Architool\Domain\Model\Folder;
-use Nidup\Architool\Domain\Model\Folder\FolderNamespace;
+use Nidup\Architool\Domain\FileStorage\Folder;
+use Nidup\Architool\Domain\FileStorage\Folder\FolderNamespace;
+use Nidup\Architool\Domain\FileStorage\FolderRepository;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

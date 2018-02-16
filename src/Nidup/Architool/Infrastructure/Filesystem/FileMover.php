@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Domain\Model\File;
+use Nidup\Architool\Domain\FileStorage\File;
 use Symfony\Component\Filesystem\Filesystem;
 
 class FileMover

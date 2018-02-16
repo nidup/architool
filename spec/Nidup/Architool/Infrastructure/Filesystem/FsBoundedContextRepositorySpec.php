@@ -2,10 +2,9 @@
 
 namespace spec\Nidup\Architool\Infrastructure\Filesystem;
 
-use Nidup\Architool\Domain\Model\BoundedContext;
-use Nidup\Architool\Domain\Model\BoundedContext\Layer;
+use Nidup\Architool\Domain\BoundedContext\BoundedContext;
+use Nidup\Architool\Domain\BoundedContext\Layer;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Symfony\Component\Filesystem\Filesystem;
 
 class FsBoundedContextRepositorySpec extends ObjectBehavior
