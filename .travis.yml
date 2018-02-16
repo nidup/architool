@@ -1,0 +1,15 @@
+language: php
+
+php:
+    - '7.1'
+
+cache:
+    directories:
+        - $HOME/.composer/cache
+
+before_script:
+    - composer selfupdate
+
+script:
+    - composer install --optimize-autoloader --no-interaction --no-progress --prefer-dist
+    - bin/phpspec run
