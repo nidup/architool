@@ -6,7 +6,8 @@
         "symfony/filesystem": "3.3.*"
     },
     "require-dev": {
-        "phpspec/phpspec": "4.0.*"
+        "phpspec/phpspec": "4.0.*",
+        "memio/spec-gen": "^0.8.4"
     },
     "license": "MIT",
     "authors": [
