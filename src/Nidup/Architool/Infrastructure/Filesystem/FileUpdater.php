@@ -8,8 +8,9 @@ class FileUpdater
 {
     public function updateIfPossible(\SplFileInfo $file, string $toReplacePattern, string $replacementValue)
     {
-        $content = file_get_contents($file->getRealPath());
+        $content = file_get_contents($file->getPathname());
         $nbReplacements = 0;
+
         $newContent = preg_replace(
             $toReplacePattern,
             $replacementValue,
@@ -19,13 +20,13 @@ class FileUpdater
         );
 
         if ($nbReplacements > 0) {
-            file_put_contents($file->getRealPath(), $newContent);
+            file_put_contents($file->getPathname(), $newContent);
         }
     }
 
     public function updateExactlyOnce(\SplFileInfo $file, string $toReplacePattern, string $replacementValue)
     {
-        $content = file_get_contents($file->getRealPath());
+        $content = file_get_contents($file->getPathname());
         $nbReplacements = 0;
         $newContent = preg_replace(
             $toReplacePattern,
@@ -40,17 +41,17 @@ class FileUpdater
                 sprintf(
                     'Expecting to find exactly once the following content to replace "%s" in the file %s',
                     $toReplacePattern,
-                    $file->getRealPath()
+                    $file->getPathname()
                 )
             );
         }
 
-        file_put_contents($file->getRealPath(), $newContent);
+        file_put_contents($file->getPathname(), $newContent);
     }
 
     public function updateAtLeastOnce(\SplFileInfo $file, string $toReplacePattern, string $replacementValue)
     {
-        $content = file_get_contents($file->getRealPath());
+        $content = file_get_contents($file->getPathname());
         $nbReplacements = 0;
         $newContent = preg_replace(
             $toReplacePattern,
@@ -65,24 +66,24 @@ class FileUpdater
                 sprintf(
                     'Expecting to find at least once the following content to replace "%s" in the file %s',
                     $toReplacePattern,
-                    $file->getRealPath()
+                    $file->getPathname()
                 )
             );
         }
 
-        file_put_contents($file->getRealPath(), $newContent);
+        file_put_contents($file->getPathname(), $newContent);
     }
 
     public function appendContent(\SplFileInfo $file, string $contentToAppend)
     {
-        $content = file_get_contents($file->getRealPath());
+        $content = file_get_contents($file->getPathname());
         $newContent = $content.$contentToAppend;
-        file_put_contents($file->getRealPath(), $newContent);
+        file_put_contents($file->getPathname(), $newContent);
     }
 
     public function containsContent(\SplFileInfo $file, string $contentToSearch): bool
     {
-        $content = file_get_contents($file->getRealPath());
+        $content = file_get_contents($file->getPathname());
         $matches = [];
         preg_match(
             $contentToSearch,
@@ -95,7 +96,7 @@ class FileUpdater
 
     public function insertUseStatementAfterNamespace(\SplFileInfo $file, string $lineToInsert)
     {
-        $content = file_get_contents($file->getRealPath());
+        $content = file_get_contents($file->getPathname());
         $lines = explode("\n", $content);
 
         $newLines = [];
@@ -107,10 +108,10 @@ class FileUpdater
         }
 
         if (count($newLines) !== (count($lines)+1)) {
-            throw new \Exception(sprintf('Use statement "%s" has not been inserted in file "%s"', $lineToInsert, $file->getRealPath()));
+            throw new \Exception(sprintf('Use statement "%s" has not been inserted in file "%s"', $lineToInsert, $file->getPathname()));
         }
 
         $newContent = implode("\n", $newLines);
-        file_put_contents($file->getRealPath(), $newContent);
+        file_put_contents($file->getPathname(), $newContent);
     }
 }
