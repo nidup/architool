@@ -7,7 +7,9 @@
     },
     "require-dev": {
         "phpspec/phpspec": "4.0.*",
-        "memio/spec-gen": "^0.8.4"
+        "memio/spec-gen": "^0.8.4",
+        "phpunit/phpunit": "^7",
+        "mikey179/vfsStream": "^1.6"
     },
     "license": "MIT",
     "authors": [
@@ -16,9 +18,6 @@
             "email": "nicolas@akeneo.com"
         }
     ],
-    "config": {
-        "bin-dir": "bin"
-    },
     "autoload": {
         "psr-4": {
             "": "src/"

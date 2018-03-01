@@ -12,4 +12,5 @@ before_script:
 
 script:
     - composer install --optimize-autoloader --no-interaction --no-progress --prefer-dist
-    - bin/phpspec run
+    - vendor/bin/phpspec run
+    - vendor/bin/phpunit tests/

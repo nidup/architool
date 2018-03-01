@@ -62,8 +62,8 @@ class FolderReferenceUpdater
             ->in([$srcPath, $behatPath, $testsPath])
             ->name('*.php');
 
-        $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $source->getName()).'/';
-        $destinationNamespace = ''.str_replace('/', "\\", $destination->getName());
+        $sourceNamespacePattern = '/'.str_replace('/', "\\\\", $source->getName()).'([;\\\\])/';
+        $destinationNamespace = ''.str_replace('/', "\\", $destination->getName()).'$1';
 
         foreach ($finder as $file) {
             $this->fileUpdater->updateIfPossible($file, $sourceNamespacePattern, $destinationNamespace);
